@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="ex-dom.js"></script>
+</head>
+
+<body>
+
+    <section id="s4">
+        <h1>iframe 예제</h1>
+        <style>
+            #s4 iframe{
+                border:none;
+                width:500px;
+                height:300px;
+            }
+        </style>
+        <div>
+            <!-- iframe - > innerframe - > ex-dom 안에다 다른 사이트 넣기  -->
+            <iframe src="ex-dom-s3zip.html"></iframe>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="s3">
+        <div>
+            <input class="zipcode-input" name="addr" />
+            <input class="search-button" type="button" value="주소검색" />
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="s2">
+        <div>
+            남은시간 <span class="count-span"></span>초
+            <input name="countdown-button" type="button" value="카운트 시작" />
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="s1">
+        <form action="">
+            <fieldset>
+                <legend>계산기 폼</legend>
+                <input type="text" id="x-input">
+                <input type="text" id="y-input">
+                <input type="button" id="add-button" value="계산">
+                <input type="text" id="result-input">
+            </fieldset>
+        </form>
+    </section>
+    <hr>
+
+
+
+</body>
+
+</html>
