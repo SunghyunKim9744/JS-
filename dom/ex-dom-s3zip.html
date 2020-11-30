@@ -16,18 +16,31 @@
         //     btn1.value="호호";
         // }
 
+        // window.onload = function(){
+        //     var btn1 = document.getElementsByTagName("input")[0];
+
+        //     btn1.onclick = function() {
+        //         // 부모 html의 zipcode-input에다가 "123456" 넣기.
+        //         var zipCodeInput = opener.document.getElementsByClassName("zipcode-input")[0];
+        //         zipCodeInput.value="123456";
+        //         // 창 닫기.
+        //         window.close();
+        //     }
+           
+        // };
         window.onload = function(){
+            // var btn1 = window.document.getElementsByTagName("input")[0];
+            // btn1.value="하하하";
+
             var btn1 = document.getElementsByTagName("input")[0];
 
-            btn1.onclick = function() {
-                // 부모 html의 zipcode-input에다가 "123456" 넣기.
-                var zipCodeInput = opener.document.getElementsByClassName("zipcode-input")[0];
-                zipCodeInput.value="123456";
-                // 창 닫기.
-                window.close();
+            btn1.onclick = function(){
+                // 부모 html의 h1 객체 갖고오고 바꾸기 - > parent
+                var h1 = parent.document.getElementsByTagName("h1")[1];
+                h1.innerText = "하하하";
             }
-           
-        };
+
+        }
     </script>
 </head>
 <body>
