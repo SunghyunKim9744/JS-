@@ -1,4 +1,52 @@
 
+//================================  s8-1   ==================================
+// 동적으로 엘리먼트 노드 css 속성 변경하기
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s8-1")
+    var prevBtn = section.querySelector(".prev-button")
+    var nextBtn = section.querySelector(".next-button");
+    var ul = section.querySelector("ul");
+
+    // var lis = ul.querySelectorAll("li");
+
+    // var current = ul.querySelector("li");
+    // var current = ul.querySelector("li:first-child");
+
+    var current = ul.querySelector("li");
+
+   
+    prevBtn.onclick = function () {
+        current.classList.remove("current");
+        current = current.previousElementSibling;
+        current.classList.add("current");
+    };
+
+    nextBtn.onclick = function () {
+
+        // 기존의 커렌트 클래스명 제거
+        current.classList.remove("current");
+        current = current.nextElementSibling;
+        
+        // 일반적으로 html속성과 이름이 동일하지만 class는 예약어임 
+        // current.class = "current"; X
+        // current.className - > 기존이름의 클래스가 있다면 바꿔버림 - >추가X
+        // 기존의 클래스명 + 추가할 클래스명
+        current.classList.add("current");
+
+        // 단, 아래는 좋은 방법이 아님.  위의 방식으로 하기 
+        // 정해진 css에서 current만 바꿔주는게 좋음 - > class 이름만 변경+추가
+            // current.style.opcity = "1";
+            // current.style.border = "1px solid green";
+
+                // 속성명이 유효하지 않을 때 2가지 방법.
+                // 1. [""]
+                // 2. 낙타표기법
+            // current.style["border-width"] = "2px";
+            // current.style.borderColor = "red";
+        
+    };
+});
+
 //================================  s8   ==================================
 // 동적으로 엘리먼트 노드 변경하기. - > img src 속성 변경
 window.addEventListener("load", function () {
@@ -9,7 +57,9 @@ window.addEventListener("load", function () {
 
     // var lis = ul.querySelectorAll("li");
 
+    // var current = ul.querySelector("li");
     var current = ul.querySelector("li:first-child");
+
    
     prevBtn.onclick = function () {
         current.innerText = "호호호";
@@ -72,6 +122,7 @@ window.addEventListener("load", function () {
         current.innerText = "호호호";
         current = current.previousElementSibling;
     };
+
 
     nextBtn.onclick = function () {
         current = current.nextElementSibling;

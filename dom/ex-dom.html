@@ -6,20 +6,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="ex-dom.js"></script>
+    <style>
+        header{
+            width:100%;
+            height:70px;
+            border-bottom: 1px solid black;
+            opacity: 0.5;
+            position: sticky;
+            top:0px;
+        }
+    </style>
 </head>
 
 <body>
-
-    <section id="s8">
+    <header>
+        <h1>헤더입니다.</h1>
+    </header>
+    <section id="s8-1">
         <h1>Gallery</h1>
         <style>
-            #s8 ul{
-                display: flex;
+
+            #s8-1 *{
+                box-sizing: border-box;
             }
-            #s8 .show-room{
+
+            #s8-1 .cliper{
+                border : 1px solid black;
                 width : 700px;
-                height : 300px;
-                border:1px solid gray;
+                overflow: hidden;
+                --position: relative;
+            }
+
+            #s8-1 ul {
+                display: flex;
+                height : 100px;
+                padding: 0px;
+
+                /* position이 아닌 transform으로 포지션이 바뀜 */
+                transform: translateX(100px);
+            }
+
+            #s8-1 ul li{
+                list-style-type: none;
+                overflow: hidden;
+                flex-basis: 100px;
+                flex-shrink: 0;
+                /* 투명도 opcity 0 완전 투명 1 완전 불투명*/
+                opacity: 0.5;
+            }
+
+            #s8-1 ul li.current{
+                opacity: 1;
+                border : 1px solid green;
+            }
+
+            /* #s8-1 ul li img{
+                이미지를 크기에 맞추는 속성 object-fit
+                width:100%;
+                height:100%;
+                object-fit: fill;
+            } */
+
+            #s8-1 .show-room {
+                width: 700px;
+                height: 300px;
+                border: 1px solid gray;
+                padding : 20px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            /* 
+                align-items : 1줄(아이템 한개일 때) 박스에 설정
+                align-content : 2줄 이상 박스에 설정
+                align-self : 박스 안의 자식들에 설정
+            */
+
+            #s8-1 .show-room img{
+                
+                --position: static;   /* 디폴트 값 - > 위치가 정해져 있음 - > 인라인이면 오른쪽, 블록이면 아래로 쌓임*/
+                --position: absolute; /* 절대 위치 - > 문서가 기준 */
+                --position: relative; /* 상대 위치 */
+                --position: fixed; /* 화면이 기준 - > 화면에 고정 단, 가려지는 부분이 생김.*/
+                --position: sticky; /* 화면에 고정, 단 가려지는 부분 안생김. top 0px 필수, 루트에서 사용*/
+
+                /* static은 안됨. */
+                --left:0px;
+                --top:0px;
+                
+                --align-self: center;
+                /* height: 100%;
+                width : 100%;
+                height : calc(100% - 8px);
+                object-fit: contain; */
+                /* max-height: 300px; */
             }
         </style>
         <div>
@@ -27,18 +109,70 @@
             <input type="button" class="next-button" value="next">
         </div>
         <div class="show-room">
-
+            <img src="../images/img4.jpg">
         </div>
-        <ul>
-            <li><img src = "../images/img1.jpg"></li>
-            <li><img src = "../images/img2.jpg"></li>
-            <li><img src = "../images/img3.jpg"></li>
-            <li><img src = "../images/img4.jpg"></li>
-            <li><img src = "../images/img5.jpg"></li>
-        </ul>
+
+        <div class="cliper">
+            <ul>
+                <li><img src="../images/img1.jpg"></li>
+                <li><img src="../images/img2.jpg"></li>
+                <li><img src="../images/img3.jpg"></li>
+                <li><img src="../images/img4.jpg"></li>
+                <li><img src="../images/img5.jpg"></li>
+                <li><img src="../images/img1.jpg"></li>
+                <li><img src="../images/img2.jpg"></li>
+                <li><img src="../images/img3.jpg"></li>
+                <li><img src="../images/img4.jpg"></li>
+                <li><img src="../images/img5.jpg"></li>
+            </ul>
+        </div>
     </section>
     <hr>
+
+    <section id="s8">
+        <h1>Gallery</h1>
+        <style>
+
+           
+            #s8 ul {
+                display: flex;
+                height : 100px;
+                padding: 0px;
+            }
+
+           
+
+            #s8 .show-room {
+                width: 700px;
+                height: 300px;
+                border: 1px solid gray;
+                padding : 20px 0px;
+                
+            }
+
+           
+        </style>
+        <div>
+            <input type="button" class="prev-button" value="prev">
+            <input type="button" class="next-button" value="next">
+        </div>
+        <div class="show-room">
+            
+        </div>
+
+        
+            <ul>
+                <li>1<img src></li>
+                <li>2<img src></li>
+                <li>3<img src></li>
+                <li>4<img src></li>
+                <li>5<img src></li>
+                
+            </ul>
     
+    </section>
+    <hr>
+
     <section id="s7">
         <h1>Selectors API Lever1</h1>
         <div>
