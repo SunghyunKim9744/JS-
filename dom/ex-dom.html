@@ -7,13 +7,13 @@
     <title>Document</title>
     <script src="ex-dom.js"></script>
     <style>
-        header{
-            width:100%;
-            height:70px;
+        header {
+            width: 100%;
+            height: 70px;
             border-bottom: 1px solid black;
             opacity: 0.5;
             position: sticky;
-            top:0px;
+            top: 0px;
         }
     </style>
 </head>
@@ -22,31 +22,73 @@
     <header>
         <h1>헤더입니다.</h1>
     </header>
+
+    <section id="s9">
+        <h1>노드 조작</h1>
+        <style>
+            #s9 .container {
+                width: 700px;
+                height: 300px;
+                border: 1px solid gray;
+            }
+
+            #s9 .button-list {
+                display: flex;
+            }
+
+            #s9 .button {
+                border: 1px solid #797979;
+                border-radius: 5px;
+                padding: 5px 10px;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+
+            #s9 .button:hover {
+                background-color: lightcoral;
+            }
+
+            #s9 .add-button {}
+        </style>
+        <div class="container">
+
+        </div>
+
+        <div class="button-list">
+            <span class="button add-button">추가</span>
+            <span class="button del-button">삭제</span>
+            <span class="button replace-button">바꾸기</span>
+        </div>
+
+    </section>
+    <hr>
+
+
     <section id="s8-1">
         <h1>Gallery</h1>
         <style>
-
-            #s8-1 *{
+            #s8-1 * {
                 box-sizing: border-box;
             }
 
-            #s8-1 .cliper{
-                border : 1px solid black;
-                width : 700px;
+            #s8-1 .cliper {
+                border: 1px solid black;
+                width: 700px;
                 overflow: hidden;
                 --position: relative;
             }
 
             #s8-1 ul {
                 display: flex;
-                height : 100px;
+                height: 100px;
                 padding: 0px;
 
                 /* position이 아닌 transform으로 포지션이 바뀜 */
-                transform: translateX(100px);
+                --transform: translateX(100px);
+                transition: transform 500ms ease-in-out;
             }
 
-            #s8-1 ul li{
+            #s8-1 ul li {
                 list-style-type: none;
                 overflow: hidden;
                 flex-basis: 100px;
@@ -55,9 +97,9 @@
                 opacity: 0.5;
             }
 
-            #s8-1 ul li.current{
+            #s8-1 ul li.current {
                 opacity: 1;
-                border : 1px solid green;
+                border: 1px solid green;
             }
 
             /* #s8-1 ul li img{
@@ -71,7 +113,7 @@
                 width: 700px;
                 height: 300px;
                 border: 1px solid gray;
-                padding : 20px 0px;
+                padding: 20px 0px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -84,18 +126,23 @@
                 align-self : 박스 안의 자식들에 설정
             */
 
-            #s8-1 .show-room img{
-                
-                --position: static;   /* 디폴트 값 - > 위치가 정해져 있음 - > 인라인이면 오른쪽, 블록이면 아래로 쌓임*/
-                --position: absolute; /* 절대 위치 - > 문서가 기준 */
-                --position: relative; /* 상대 위치 */
-                --position: fixed; /* 화면이 기준 - > 화면에 고정 단, 가려지는 부분이 생김.*/
-                --position: sticky; /* 화면에 고정, 단 가려지는 부분 안생김. top 0px 필수, 루트에서 사용*/
+            #s8-1 .show-room img {
+
+                --position: static;
+                /* 디폴트 값 - > 위치가 정해져 있음 - > 인라인이면 오른쪽, 블록이면 아래로 쌓임*/
+                --position: absolute;
+                /* 절대 위치 - > 문서가 기준 */
+                --position: relative;
+                /* 상대 위치 */
+                --position: fixed;
+                /* 화면이 기준 - > 화면에 고정 단, 가려지는 부분이 생김.*/
+                --position: sticky;
+                /* 화면에 고정, 단 가려지는 부분 안생김. top 0px 필수, 루트에서 사용*/
 
                 /* static은 안됨. */
-                --left:0px;
-                --top:0px;
-                
+                --left: 0px;
+                --top: 0px;
+
                 --align-self: center;
                 /* height: 100%;
                 width : 100%;
@@ -132,44 +179,40 @@
     <section id="s8">
         <h1>Gallery</h1>
         <style>
-
-           
             #s8 ul {
                 display: flex;
-                height : 100px;
+                height: 100px;
                 padding: 0px;
             }
 
-           
+
 
             #s8 .show-room {
                 width: 700px;
                 height: 300px;
                 border: 1px solid gray;
-                padding : 20px 0px;
-                
-            }
+                padding: 20px 0px;
 
-           
+            }
         </style>
         <div>
             <input type="button" class="prev-button" value="prev">
             <input type="button" class="next-button" value="next">
         </div>
         <div class="show-room">
-            
+
         </div>
 
-        
-            <ul>
-                <li>1<img src></li>
-                <li>2<img src></li>
-                <li>3<img src></li>
-                <li>4<img src></li>
-                <li>5<img src></li>
-                
-            </ul>
-    
+
+        <ul>
+            <li>1<img src></li>
+            <li>2<img src></li>
+            <li>3<img src></li>
+            <li>4<img src></li>
+            <li>5<img src></li>
+
+        </ul>
+
     </section>
     <hr>
 

@@ -1,4 +1,75 @@
 
+//================================  s9   ==================================
+// 동적으로 노드 추가,삭제,변경하기
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s9")
+    var container = section.querySelector(".container");
+    var addBtn = section.querySelector(".add-button")
+    var delBtn = section.querySelector(".del-button");
+    var replaceBtn = section.querySelector(".replace-button");
+
+    var index =1;
+    addBtn.onclick = function () {
+
+        //              1. 텍스트 노드
+        // 1. 텍스트 노드 생성 - > documnet에서 노드 생성
+             // var text = document.createTextNode("안녕");
+        // 2. 컨테이너에 노드 추가 - > 노드에서 노드가 갖고 있는 appendChild
+             // container.appendChild(text);
+
+            //  이전 기능
+        //              2. 엘리먼트 노드
+        // 1. span 엘리먼트 객체 생성
+            // var span = document.createElement("span");
+        // 2. 텍스트 노드 생성
+            // var text = document.createTextNode("안녕"+index++);
+        // 3. span에 2번에 생성한 텍스트 노드 추가
+            // span.appendChild(text);
+        // 4. 컨테이너에 span 노드 추가
+            // container.appendChild(span);
+
+            // 새로운 기능
+        //              2. 엘리먼트 노드
+        // 1. span 엘리먼트 객체 생성
+        var span = document.createElement("span");
+        // 2. 텍스트 노드를 생성하면서 span에 추가
+        span.append("안녕"+index++);
+        // 4. 컨테이너에 span 노드 추가
+        // container.appendChild(span);
+        // 여러개도 넣을 수 있음.
+        container.append(span,"하이룽");
+
+       
+    };
+
+    delBtn.onclick = function () {
+        // 컨테이너 안에 있는 span 엘리먼트 노드 삭제
+        // 이전 기능
+        // container.removeChild(container.lastElementChild);
+
+        // 새로운 기능
+        container.lastElementChild.remove();
+    };
+
+    replaceBtn.onclick = function () {
+
+            // 2번째와 세번째 바꾸기
+        var newOne = container.children[2];
+        var oldOne = container.children[1]; 
+        container.replaceChild(newOne,oldOne);
+        container.insertBefore(oldOne,newOne.nextElementSibling);
+        // container.insertBefore
+
+            // 1번째와 마지막을 바꾸기
+        // var newOne = container.lastElementChild;
+        // var oldOne = container.firstElementChild;
+            // oldOne - > newOne으로 대체가 됨 - > 개수가 줄음. oleOne을 다시 넣어줘야함.
+        // container.replaceChild(newOne,oldOne);
+    
+        // container.appendChild(oldOne);
+    };
+});
+
 //================================  s8-1   ==================================
 // 동적으로 엘리먼트 노드 css 속성 변경하기
 window.addEventListener("load", function () {
@@ -7,26 +78,51 @@ window.addEventListener("load", function () {
     var nextBtn = section.querySelector(".next-button");
     var ul = section.querySelector("ul");
 
+
     // var lis = ul.querySelectorAll("li");
 
     // var current = ul.querySelector("li");
     // var current = ul.querySelector("li:first-child");
 
-    var current = ul.querySelector("li");
+    var current = ul.querySelector("li:nth-child(4)");
 
-   
+    var showRoomImg = section.querySelector(".show-room img");
+    var currentImg;
+
+    var index=0;
+
     prevBtn.onclick = function () {
+        if (current.previousElementSibling == null) {
+            alert("갈 곳이 없습니다");
+            return;
+        }
+
+        index++;
+        var x = index*100+"px";
+        ul.style.transform = "translateX("+x+")";
+
         current.classList.remove("current");
         current = current.previousElementSibling;
         current.classList.add("current");
+        currentImg = current.querySelector("img");
+        showRoomImg.src = currentImg.src;
+
     };
 
     nextBtn.onclick = function () {
 
+        if (current.nextElementSibling == null) {
+            alert("갈 곳이 없습니다");
+            return;
+        }
+
+        index--;
+        var x = index*100+"px";
+        ul.style.transform = "translateX("+x+")";
         // 기존의 커렌트 클래스명 제거
         current.classList.remove("current");
         current = current.nextElementSibling;
-        
+
         // 일반적으로 html속성과 이름이 동일하지만 class는 예약어임 
         // current.class = "current"; X
         // current.className - > 기존이름의 클래스가 있다면 바꿔버림 - >추가X
@@ -35,15 +131,17 @@ window.addEventListener("load", function () {
 
         // 단, 아래는 좋은 방법이 아님.  위의 방식으로 하기 
         // 정해진 css에서 current만 바꿔주는게 좋음 - > class 이름만 변경+추가
-            // current.style.opcity = "1";
-            // current.style.border = "1px solid green";
+        // current.style.opcity = "1";
+        // current.style.border = "1px solid green";
 
-                // 속성명이 유효하지 않을 때 2가지 방법.
-                // 1. [""]
-                // 2. 낙타표기법
-            // current.style["border-width"] = "2px";
-            // current.style.borderColor = "red";
-        
+        // 속성명이 유효하지 않을 때 2가지 방법.
+        // 1. [""]
+        // 2. 낙타표기법
+        // current.style["border-width"] = "2px";
+        // current.style.borderColor = "red";
+        currentImg = current.querySelector("img");
+        showRoomImg.src = currentImg.src;
+
     };
 });
 
@@ -60,7 +158,7 @@ window.addEventListener("load", function () {
     // var current = ul.querySelector("li");
     var current = ul.querySelector("li:first-child");
 
-   
+
     prevBtn.onclick = function () {
         current.innerText = "호호호";
         current = current.previousElementSibling;
@@ -70,7 +168,7 @@ window.addEventListener("load", function () {
         current = current.nextElementSibling;
         var img = current.firstElementChild;
         img.src = "../images/img1.jpg";
-        
+
     };
 });
 
