@@ -1,3 +1,33 @@
+//-------------------- s3 --------------------------
+// 노드 조작 - > 보다 나은 방식
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s3");
+    var addBtn = section.querySelector(".add-button");
+    var delBtn = section.querySelector(".del-button");
+    var swapBtn = section.querySelector(".rep-button");
+
+    var container = section.querySelector(".container");
+
+    var addText = section.querySelector(".add-in-text");
+
+    // div 색깔 주기.
+    var colorIdx = 0;
+    var colors = ["lightgreen", "lightblue", "orange", "lightslategrey", "tomato", "violet", "red","teal"];
+
+    addBtn.onclick = function () {
+    
+    };
+
+    delBtn.onclick = function () {
+        
+    };
+
+    swapBtn.onclick = function () {
+
+    };
+});
+
+//-------------------- s2 --------------------------
 // 노드 조작
 window.addEventListener("load", function () {
     var section = document.querySelector("#s2");
@@ -25,6 +55,11 @@ window.addEventListener("load", function () {
         div.style.background = colors[colorIdx++];
         div.append(addText.value + index++);
         container.append(div);
+
+        // insertBefore 2번째 인자인 기준 노드가 없을 시, 에러 없이 container 안의 마지막 노드 뒤에 노드가 추가됨.
+        // container.insertBefore(div,null);
+        // container.insertBefore(div,undefined);
+        
     };
 
     delBtn.onclick = function () {
@@ -56,7 +91,8 @@ window.addEventListener("load", function () {
     };
 });
 
-//----------------------------------------------
+//-------------------- s2 --------------------------
+// 노드 조작
 window.addEventListener("load", function () {
     var section = document.querySelector("#s");
     var prevBtn = section.querySelector(".prev-button");

@@ -23,6 +23,62 @@
         <h1>헤더입니다.</h1>
     </header>
 
+    <section id="s9-1">
+        <h1>노드 조작(좀 더 나은 방식 - > 최종 방식)</h1>
+        <style>
+            #s9-1 .container {
+                width: 700px;
+                height: 300px;
+                border: 1px solid gray;
+
+                display:flex;
+                align-content: flex-start;
+                flex-wrap: wrap;
+            }
+
+            #s9-1 .item{
+                border:1px solid gray;
+                padding:5px;
+            }
+
+            #s9-1 .button-list {
+                display: flex;
+            }
+
+            #s9-1 .button {
+                border: 1px solid #797979;
+                border-radius: 5px;
+                padding: 5px 10px;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+
+            #s9-1 .button:hover {
+                background-color: lightcoral;
+            }
+
+            #s9-1 .add-button {}
+        </style>
+        <div class="container">
+            <!-- 동적으로 만들기 -->
+            <!-- <span class="item">
+                <input type="checkbox">
+                <span>안녕1</span>
+            </span> -->
+        </div>
+
+        <div class="button-list">
+            <span class="button add-button">추가</span>
+            <span class="button del-button">삭제</span>
+            <span class="button replace-button">바꾸기</span>
+            <span class="button change-text-button">텍스트 바꾸기</span>
+        </div>
+
+    </section>
+    <hr>
+
+
+
     <section id="s9">
         <h1>노드 조작</h1>
         <style>
@@ -51,7 +107,6 @@
             #s9 .add-button {}
         </style>
         <div class="container">
-
         </div>
 
         <div class="button-list">
@@ -65,7 +120,7 @@
 
 
     <section id="s8-1">
-        <h1>Gallery</h1>
+        <h1>Gallery 추가</h1>
         <style>
             #s8-1 * {
                 box-sizing: border-box;

@@ -1,4 +1,100 @@
 
+//================================  s9-1   ==================================
+// 동적으로 노드 추가,삭제,변경하기 - > 노드 조작(좀 더 나은 방식 - > 최종 방식)
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s9-1")
+    var container = section.querySelector(".container");
+    var addBtn = section.querySelector(".add-button")
+    var delBtn = section.querySelector(".del-button");
+    var replaceBtn = section.querySelector(".replace-button");
+    var changeBtn = section.querySelector(".change-text-button");
+
+    var index = 1;
+    addBtn.onclick = function () {
+
+        // 최종 방식 insertAdjacentHTML 사용 - > 노드가 추가되는 방식
+            var item = '<span class="item"> \
+                    <input type="checkbox"> \
+                    <span class="label">안녕'+ (index++) + '</span> \
+                </span>';
+            
+            container.insertAdjacentHTML('beforeend',item);
+
+
+        // 대안 1 innterHTML 속성사용 - > 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
+
+            // 엔터도 구분자로 사용되기 때문에 한칸띄고 \ 이용
+            // var item = '<span class="item"> \
+            //                 <input type="checkbox"> \
+            //                 <span>안녕'+(index++)+'</span> \
+            //             </span>';
+
+            // 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
+            // container.innerHTML+=item;
+
+
+    };
+
+    delBtn.onclick = function () {
+
+        // ------- 선택 삭제 방식을 통한 구현 ---------
+
+// 선택된 노드 찾기 - > 보다 바람직한 방법 - > 슈도 클래스 이용 
+        var chks = container.querySelectorAll("input[type=checkbox]:checked");
+
+// 선택된 노드 찾기 - > 바람직하지 않은 방법 - > 직접 모든 노드를 순회 하는 방식
+        
+        // 1. item 목록 얻기
+            // var items = container.children;
+        
+        // 2. item을 순회하면서 checkbox 얻기
+        // 3. checkbox의 상태가 선택되어 있는 것들을 추려서 배열에 담기.
+            // var chks =[];
+            // for(var i=0; i<items.length; i++){
+            //     var checkbox = items[i].querySelector("input[type='checkbox']");
+            //     if(checkbox.checked)
+            //         chks.push(checkbox);
+            // }
+
+        // 4. 콘솔 출력
+            console.log(chks);
+        
+        for(var i=0; i<chks.length; i++){
+            chks[i].parentElement.remove();
+        }
+        // container.lastElementChild.remove();
+    };
+
+    replaceBtn.onclick = function () {
+
+        var chks = container.querySelectorAll("input[type=checkbox]:checked");
+        if(chks.length != 2){
+            alert("2개만 선택하세요");
+            return;
+        }
+
+        var item1 = chks[0].parentElement;
+        var item2 = chks[1].parentElement;
+
+        var before = item2.previousElementSibling;
+       
+        item1.replaceWith(item2);
+
+        before.insertAdjacentElement('afterend', item1);
+
+
+    };
+
+    changeBtn.onclick = function() {
+        var chks = container.querySelectorAll("input[type=checkbox]:checked");
+        for(var i=0; i<chks.length; i++){
+            var parent = chks[i].parentNode;
+            var textSpan = parent.querySelector(".label");
+            textSpan.innerText="변경";
+        }
+    }
+});
+
 //================================  s9   ==================================
 // 동적으로 노드 추가,삭제,변경하기
 window.addEventListener("load", function () {
@@ -8,38 +104,35 @@ window.addEventListener("load", function () {
     var delBtn = section.querySelector(".del-button");
     var replaceBtn = section.querySelector(".replace-button");
 
-    var index =1;
+    var index = 1;
     addBtn.onclick = function () {
 
         //              1. 텍스트 노드
         // 1. 텍스트 노드 생성 - > documnet에서 노드 생성
-             // var text = document.createTextNode("안녕");
+        // var text = document.createTextNode("안녕");
         // 2. 컨테이너에 노드 추가 - > 노드에서 노드가 갖고 있는 appendChild
-             // container.appendChild(text);
-
-            //  이전 기능
-        //              2. 엘리먼트 노드
+        // container.appendChild(text);
+  
+        //              2. 엘리먼트 노드 - > 이전 기능 appendChild
         // 1. span 엘리먼트 객체 생성
-            // var span = document.createElement("span");
+        // var span = document.createElement("span");
         // 2. 텍스트 노드 생성
-            // var text = document.createTextNode("안녕"+index++);
+        // var text = document.createTextNode("안녕"+index++);
         // 3. span에 2번에 생성한 텍스트 노드 추가
-            // span.appendChild(text);
+        // span.appendChild(text);
         // 4. 컨테이너에 span 노드 추가
-            // container.appendChild(span);
-
-            // 새로운 기능
-        //              2. 엘리먼트 노드
+        // container.appendChild(span);
+ 
+        //              2. 엘리먼트 노드 - > 새로운 기능 append
         // 1. span 엘리먼트 객체 생성
         var span = document.createElement("span");
         // 2. 텍스트 노드를 생성하면서 span에 추가
-        span.append("안녕"+index++);
-        // 4. 컨테이너에 span 노드 추가
-        // container.appendChild(span);
-        // 여러개도 넣을 수 있음.
-        container.append(span,"하이룽");
+        span.append("안녕" + index++);
+        // 3. 컨테이너에 span 노드 추가 - > 여러개도 넣을 수 있음.
+        // container.append(span,"하이룽");
+        container.append(span);
 
-       
+
     };
 
     delBtn.onclick = function () {
@@ -53,24 +146,25 @@ window.addEventListener("load", function () {
 
     replaceBtn.onclick = function () {
 
-            // 2번째와 세번째 바꾸기
+        // 2번째와 세번째 바꾸기
         var newOne = container.children[2];
-        var oldOne = container.children[1]; 
-        container.replaceChild(newOne,oldOne);
-        
-            // 이전 기능
-            // container.insertBefore(oldOne,newOne.nextElementSibling);
+        var oldOne = container.children[1];
+        container.replaceChild(newOne, oldOne);
+
+        // 이전 기능
+        // container.insertBefore(oldOne,newOne.nextElementSibling);
+
         // 새로운 기능
         newOne.insertAdjacentElement('afterend', oldOne);
 
         // container.insertBefore
 
-            // 1번째와 마지막을 바꾸기
+        // 1번째와 마지막을 바꾸기
         // var newOne = container.lastElementChild;
         // var oldOne = container.firstElementChild;
-            // oldOne - > newOne으로 대체가 됨 - > 개수가 줄음. oleOne을 다시 넣어줘야함.
+        // oldOne - > newOne으로 대체가 됨 - > 개수가 줄음. oleOne을 다시 넣어줘야함.
         // container.replaceChild(newOne,oldOne);
-    
+
         // container.appendChild(oldOne);
     };
 });
@@ -94,7 +188,7 @@ window.addEventListener("load", function () {
     var showRoomImg = section.querySelector(".show-room img");
     var currentImg;
 
-    var index=0;
+    var index = 0;
 
     prevBtn.onclick = function () {
         if (current.previousElementSibling == null) {
@@ -103,8 +197,8 @@ window.addEventListener("load", function () {
         }
 
         index++;
-        var x = index*100+"px";
-        ul.style.transform = "translateX("+x+")";
+        var x = index * 100 + "px";
+        ul.style.transform = "translateX(" + x + ")";
 
         current.classList.remove("current");
         current = current.previousElementSibling;
@@ -122,8 +216,8 @@ window.addEventListener("load", function () {
         }
 
         index--;
-        var x = index*100+"px";
-        ul.style.transform = "translateX("+x+")";
+        var x = index * 100 + "px";
+        ul.style.transform = "translateX(" + x + ")";
         // 기존의 커렌트 클래스명 제거
         current.classList.remove("current");
         current = current.nextElementSibling;
