@@ -57,7 +57,12 @@ window.addEventListener("load", function () {
         var newOne = container.children[2];
         var oldOne = container.children[1]; 
         container.replaceChild(newOne,oldOne);
-        container.insertBefore(oldOne,newOne.nextElementSibling);
+        
+            // 이전 기능
+            // container.insertBefore(oldOne,newOne.nextElementSibling);
+        // 새로운 기능
+        newOne.insertAdjacentElement('afterend', oldOne);
+
         // container.insertBefore
 
             // 1번째와 마지막을 바꾸기
