@@ -54,9 +54,10 @@ window.addEventListener("load", function () {
         var div = document.createElement("div");
         div.style.background = colors[colorIdx++];
         div.append(addText.value + index++);
-        container.append(div);
+        // container.append(div);
 
-        // insertBefore 2번째 인자인 기준 노드가 없을 시, 에러 없이 container 안의 마지막 노드 뒤에 노드가 추가됨.
+        // insertBefore 2번째 인자인 기준 노드가 없을 시, 에러 없이 container 안의 마지막 노드 뒤에 노드가 추가됨. 심지어 2번째 인자 안줘도됨.
+        // container.insertBefore(div);
         // container.insertBefore(div,null);
         // container.insertBefore(div,undefined);
         
@@ -67,7 +68,6 @@ window.addEventListener("load", function () {
     };
 
     swapBtn.onclick = function () {
-
         var oldOneNum = parseInt(swapOldText.value)-1;
         var newOneNum = parseInt(swapNewText.value)-1;
        

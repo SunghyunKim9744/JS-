@@ -1,4 +1,140 @@
 
+//================================  s10   ==================================
+// 마우스 이벤트 객체 with Gallery
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s10")
+    var prevBtn = section.querySelector(".prev-button")
+    var nextBtn = section.querySelector(".next-button");
+    var ul = section.querySelector("ul");
+
+
+    var current = ul.querySelector("li:nth-child(4)");
+
+    var showRoom = section.querySelector(".show-room");
+    var showRoomImg = section.querySelector(".show-room img");
+
+    var currentImg;
+
+    var index = 0;
+
+    showRoomImg.style.transition = "transform 2000ms";
+        // notify(함수를 호출하기 전에 확인하는 것)에서 호출순서정하기
+        // addEventListener 3번째 인자 true
+    showRoom.addEventListener("click",function(e) {
+        showRoomImg.style.transform="scale(1,1)";
+        console.log("부모다");
+        
+    },true);
+    
+        // 이벤트 버블링에 대한 문제와 해결 방법
+    
+    // showRoom > showRoomImg
+
+    // showRoom.onclick = function(e){
+    //     showRoomImg.style.transform="scale(1,1)";
+    //     console.log("부모다");
+    // };
+
+    showRoomImg.onclick = function(e){
+        // 버블링 막기 - > stopPropagation
+        // e.stopPropagation();
+        e.target.style.transform="scale(1.2,1.2)";
+        console.log("자식이다");
+    };
+    
+        // 3. 더 나은 방법 -> 부모 객체에 이벤트 넘겨주기. - > 이벤트 버블링
+        // ul>li>img , img를 클릭하는 이벤트가 li->ul로 전달
+    ul.onclick = function(e){
+        if(e.target.tagName != "IMG")
+            return;
+        current.classList.remove("current");
+        current = e.target.parentElement;
+        current.classList.add("current");
+        var newImg = current.firstElementChild;
+        showRoomImg.src = newImg.src;
+    }
+// -------------------------------------------------
+
+            // 2. 조금 개선한 방법
+    // var imgClickHandler = function(e){
+            
+    //     current.classList.remove("current");
+    //     current = e.target.parentElement;
+    //     current.classList.add("current");
+
+    //     var newImg = current.firstElementChild;
+    //     showRoomImg.src = newImg.src;
+    // }
+    // var imgs = section.querySelectorAll("ul img");
+    // for(var i=0; i<imgs.length; i++){
+    //     imgs[i].onclick = imgClickHandler;
+    // }
+
+// -------------------------------------------------
+
+         // 1. 가장 복잡하고 가장 바람직하지 않은 방법
+    // var imgs = section.querySelectorAll("ul img");
+    // for(var i=0; i<imgs.length; i++){
+    //     imgs[i].onclick = function(e){
+            
+
+    //         current.classList.remove("current");
+    //         current = e.target.parentElement;
+    //         current.classList.add("current");
+
+            // 현재 선틱된 녀석
+    //         var newImg = current.firstElementChild;
+    //         showRoomImg.src = newImg.src;
+    //     }
+    // }
+    
+    prevBtn.onclick = function (e) {
+
+        // 기본 행위를 막는 함수 preventDefault
+        // ex - > submit은 전송 막기 
+        // a 태그의 페이지 이동 행위 막기
+        e.preventDefault();
+        if (current.previousElementSibling == null) {
+            alert("갈 곳이 없습니다");
+            return;
+        }
+
+        index++;
+        var x = index * 100 + "px";
+        ul.style.transform = "translateX(" + x + ")";
+
+        current.classList.remove("current");
+        current = current.previousElementSibling;
+        current.classList.add("current");
+        currentImg = current.querySelector("img");
+        showRoomImg.src = currentImg.src;
+
+    };
+
+    nextBtn.onclick = function (e) {
+
+        // 기본 행위를 막는 함수 preventDefault
+        // ex - > submit은 전송 막기 
+        // a 태그의 페이지 이동 행위 막기
+        e.preventDefault();
+        if (current.nextElementSibling == null) {
+            alert("갈 곳이 없습니다");
+            return;
+        }
+
+        index--;
+        var x = index * 100 + "px";
+        ul.style.transform = "translateX(" + x + ")";
+        current.classList.remove("current");
+        current = current.nextElementSibling;
+        current.classList.add("current");
+
+        currentImg = current.querySelector("img");
+        showRoomImg.src = currentImg.src;
+
+    };
+});
+
 //================================  s9-1   ==================================
 // 동적으로 노드 추가,삭제,변경하기 - > 노드 조작(좀 더 나은 방식 - > 최종 방식)
 window.addEventListener("load", function () {

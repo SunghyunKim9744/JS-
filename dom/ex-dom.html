@@ -23,6 +23,71 @@
         <h1>헤더입니다.</h1>
     </header>
 
+    <section id="s10">
+        <h1>마우스 이벤트 객체 with Gallery</h1>
+        <style>
+            #s10 * {
+                box-sizing: border-box;
+            }
+            #s10 .cliper {
+                border: 1px solid black;
+                width: 700px;
+                overflow: hidden;
+            }
+            #s10 ul {
+                display: flex;
+                height: 100px;
+                padding: 0px;
+                transition: transform 500ms ease-in-out;
+            }
+            #s10 ul li {
+                list-style-type: none;
+                overflow: hidden;
+                flex-basis: 100px;
+                flex-shrink: 0;
+                opacity: 0.5;
+            }
+            #s10 ul li.current {
+                opacity: 1;
+                border: 1px solid green;
+            }
+            #s10 .show-room {
+                width: 700px;
+                height: 300px;
+                border: 1px solid gray;
+                padding: 20px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+        </style>
+        
+        <div>
+            <a href="" class="prev-button">이전</a>
+            <a href="" class="next-button">다음</a>
+        </div>
+        <div class="show-room">
+            <img src="../images/img4.jpg">
+        </div>
+
+        <div class="cliper">
+            <ul>
+                <li><img src="../images/img1.jpg"></li>
+                <li><img src="../images/img2.jpg"></li>
+                <li><img src="../images/img3.jpg"></li>
+                <li><img src="../images/img4.jpg"></li>
+                <li><img src="../images/img5.jpg"></li>
+                <li><img src="../images/img1.jpg"></li>
+                <li><img src="../images/img2.jpg"></li>
+                <li><img src="../images/img3.jpg"></li>
+                <li><img src="../images/img4.jpg"></li>
+                <li><img src="../images/img5.jpg"></li>
+            </ul>
+        </div>
+    </section>
+    <hr>
+
     <section id="s9-1">
         <h1>노드 조작(좀 더 나은 방식 - > 최종 방식)</h1>
         <style>
@@ -73,11 +138,8 @@
             <span class="button replace-button">바꾸기</span>
             <span class="button change-text-button">텍스트 바꾸기</span>
         </div>
-
     </section>
     <hr>
-
-
 
     <section id="s9">
         <h1>노드 조작</h1>
