@@ -1,4 +1,57 @@
 
+//================================  s11   ==================================
+// Ajax 다루기
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s11");
+    var button1 = section.querySelector(".button1");
+    var tbody = section.querySelector("tbody");
+    console.log(button1);
+    button1.onclick = function() {
+        console.log("asd");
+        var request = new window.XMLHttpRequest();
+        // 비동기적으로 처리하기 위한 콜백
+        // 데이터를 요청하는 작업이 끝났을 때 함수 호출
+        //  - > 콜백
+        // onreadystatechange  - > 스테이트 상태가 변할때 마다 호출
+        // 0 - >
+        // 1 - > 
+        // 2 - >
+        // 3 - >
+        // 4 - >
+        request.onreadystatechange = function() {
+            // console.log(request.readyState);
+            // console.log(request.responseText);
+            if(request.readyState==4){
+                var notices = JSON.parse(request.responseText);
+                console.log(notices);
+                for(var i=0; i<notices.length; i++){
+                    var tr = '<tr> \
+                            <td>'+notices[i].id+'</td> \
+                            <td><a href="detail.html">'+notices[i].title+'</a></td> \
+                            <td>'+notices[i].writerId+'</td> \
+                            <td> \
+                            2019-08-18 \
+                            </td> \
+                            <td>146</td>\
+                          </tr>';
+                tbody.insertAdjacentHTML('beforeend',tr);
+                }
+                
+            }
+                
+        }
+        // open 3번째 인자 true - > 동기형, false - > 비동기형(기본값)
+        // 요청은 우선 동기적으로 해야함.
+        request.open("GET","/api/board/notice/list",true);
+        request.send();
+
+        // alert(request.responseText);
+    }
+   
+
+    
+});
+
 //================================  s10   ==================================
 // 마우스 이벤트 객체 with Gallery
 window.addEventListener("load", function () {
@@ -468,7 +521,7 @@ window.addEventListener("load", function () {
 window.addEventListener("load", function () {
     var section = document.getElementById("s5");
     var urlInput = section.getElementsByClassName("url-input")[0];
-    var btn1 = document.getElementsByClassName("button1")[0];
+    var btn1 = section.getElementsByClassName("button1")[0];
 
     btn1.onclick = function () {
         // window.location - > 입력된 url로 가기 - > url 객체
@@ -486,7 +539,7 @@ window.addEventListener("load", function () {
 
 window.addEventListener("load", function () {
     var section = document.getElementById("s4");
-    var btn1 = document.getElementsByClassName("btn1")[0];
+    var btn1 = section.getElementsByClassName("btn1")[0];
     var win = section.getElementsByTagName("iframe")[0].contentWindow;
 
     btn1.onclick = function () {
