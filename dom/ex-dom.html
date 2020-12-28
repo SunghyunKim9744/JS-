@@ -23,35 +23,72 @@
         <h1>헤더입니다.</h1>
     </header>
 
+    <section id="s13">
+        <style>
+            #s13 .container{
+                width:500px;
+                height:300px;
+                border : 1px solid gray;
+            }
+
+            #s13 .box{
+                width:100px;
+                height:100px;
+                background:blue;
+
+                position: absolute;
+            }
+        </style>
+        <h1>마우스 이벤트 : 드래그 드랍</h1>
+        <div class="container">
+            <div class="box"></div>
+        </div>
+    </section>
+    <hr>
+
+    <section id="s12">
+        <style>
+            #s12 input {
+                display: none;
+            }
+        </style>
+        <h1>트리거</h1>
+        <div>
+            <input type="file">
+            <span class="file-button">파일선택</span>
+        </div>
+    </section>
+    <hr>
+
     <section id="s11">
         <h1>Ajax 다루기</h1>
-        
+
         <div>
             <input class="button1" type="button" value="로드">
         </div>
-        <div >            
+        <div>
             <table class="table" border="1">
-               <thead>
-                  <tr>
-                     <th>번호</th>
-                     <th>제목</th>
-                     <th>작성자</th>
-                     <th>작성일</th>
-                     <th>조회수</th>
-                     <th colspan="2">관리</th>
-                  </tr>
-               </thead>
-               <tbody>               
-               </tbody>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                        <th colspan="2">관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
             </table>
-         </div>
-         <div class="pager">
-             <a href="?p=1">1</a>
-             <a href="?p=2">2</a>
-             <a href="?p=3">3</a>
-             <a href="?p=4">4</a>
-             <a href="?p=5">5</a>
-         </div>
+        </div>
+        <div class="pager">
+            <a href="?p=1">1</a>
+            <a href="?p=2">2</a>
+            <a href="?p=3">3</a>
+            <a href="?p=4">4</a>
+            <a href="?p=5">5</a>
+        </div>
     </section>
     <hr>
 
@@ -61,17 +98,20 @@
             #s10 * {
                 box-sizing: border-box;
             }
+
             #s10 .cliper {
                 border: 1px solid black;
                 width: 700px;
                 overflow: hidden;
             }
+
             #s10 ul {
                 display: flex;
                 height: 100px;
                 padding: 0px;
                 transition: transform 500ms ease-in-out;
             }
+
             #s10 ul li {
                 list-style-type: none;
                 overflow: hidden;
@@ -79,10 +119,12 @@
                 flex-shrink: 0;
                 opacity: 0.5;
             }
+
             #s10 ul li.current {
                 opacity: 1;
                 border: 1px solid green;
             }
+
             #s10 .show-room {
                 width: 700px;
                 height: 300px;
@@ -94,7 +136,7 @@
                 overflow: hidden;
             }
         </style>
-        
+
         <div>
             <a href="" class="prev-button">이전</a>
             <a href="" class="next-button">다음</a>
@@ -128,14 +170,14 @@
                 height: 300px;
                 border: 1px solid gray;
 
-                display:flex;
+                display: flex;
                 align-content: flex-start;
                 flex-wrap: wrap;
             }
 
-            #s9-1 .item{
-                border:1px solid gray;
-                padding:5px;
+            #s9-1 .item {
+                border: 1px solid gray;
+                padding: 5px;
             }
 
             #s9-1 .button-list {

@@ -1,4 +1,105 @@
 
+//================================  s13   ==================================
+// 마우스 이벤트 : 드래그 드랍
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s13");
+    var container = section.querySelector(".container");
+    var box = container.querySelector(".box");
+
+    var down = false;
+    // var offX = 0;
+    // var offY = 0;
+    var offset = {x:0, y:0};
+    // 박스의 위치를 알기 위한 이벤트
+    box.onclick = function(e) {
+        
+    }
+
+    container.onmousemove = function(e) {
+        if(down){
+            console.log("client X : "+e.x);
+            console.log("client Y : "+e.y);
+    
+            box.style.left = e.x+"px";
+            box.style.top = e.y+"px";
+        }
+        
+    }
+
+     
+    container.onmousedown = function() {
+        console.log("mousedown");
+        down=true;
+    }
+    
+    container.onmouseup = function() {
+        console.log("mouseup");
+        down=false;
+    }
+
+    // // 박스 움직이기 - > 컨테이너로 바꿔야함.
+    // box.onmousemove = function(e) {
+    //     // screen - > 화면상의 위치
+    //     // client - > 문서상의 위치
+    //     console.log("screen X : "+e.screenX);
+    //     console.log("screen Y : "+e.screenY);
+    //     // clientX,Y 는 e.x, e.y로 표기 가능
+    //     console.log("client X : "+e.x);
+    //     console.log("client Y : "+e.y);
+
+    //     box.style.left = e.x+"px";
+    //     box.style.top = e.y+"px";
+    // }
+
+    // // 눌렀을 때
+    // box.onmousedown = function() {
+    //     console.log("mousedown");
+    // }
+    // // 뗏을 때
+    // box.onmouseup = function() {
+    //     console.log("mouseup");
+    // }
+    // // 들어 갔을 때(enter 보다 먼저 실행)
+    // box.onmouseover = function() {
+    //     console.log("mouseover");
+    // }
+    // // 나왔을 때 (leave 보다 먼저 실행)
+    // box.onmouseout = function() {
+    //     console.log("mouseout");
+    // }
+    // // 들어 갔을 때(over 보다 나중에 실행)
+    // box.onmouseenter = function() {
+    //     console.log("mouseenter");
+    // }
+    // // 나왔을 때 (out 보다 나중에 실행)
+    // box.onmouseleave = function() {
+    //     console.log("mouseleave");
+    // }
+    // // 움직일 때
+    // box.onmousemove = function() {
+    //     console.log("mousemove");
+    // }
+
+   
+});
+
+//================================  s12   ==================================
+// 트리거
+window.addEventListener("load", function () {
+    var section = document.querySelector("#s12");
+    var fileBtn = section.querySelector(".file-button");
+    var file = section.querySelector("input[type=file]")
+    fileBtn.addEventListener("click",function() {
+        var event = new MouseEvent("click",{
+            'view':window,
+            'bubbles':true,
+            'cancelable':true
+        });
+        file.dispatchEvent(event);
+    });
+});
+
+
 //================================  s11   ==================================
 // Ajax 다루기
 window.addEventListener("load", function () {
@@ -271,7 +372,7 @@ window.addEventListener("load", function () {
         container.insertAdjacentHTML('beforeend', item);
 
 
-        // 대안 1 innterHTML 속성사용 - > 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
+        // 대안 1 innerHTML 속성사용 - > 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
 
         // 엔터도 구분자로 사용되기 때문에 한칸띄고 \ 이용
         // var item = '<span class="item"> \
