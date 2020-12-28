@@ -5,51 +5,112 @@ window.addEventListener("load", function () {
     var section = document.querySelector("#s11");
     var button1 = section.querySelector(".button1");
     var tbody = section.querySelector("tbody");
-    console.log(button1);
-    button1.onclick = function() {
-        console.log("asd");
-        var request = new window.XMLHttpRequest();
+    var pager = section.querySelector(".pager");
+
+    pager.onclick = function(e) {
+        e.preventDefault();
+        
+        // e.target - > a 태그
+        // innerText - > a 태그의 텍스트
+        var page = parseInt(e.target.innerText);
+        console.log(page);
+        load(page);
+        
+    }
+
+    button1.onclick = function () {
+        load();
+        // var request = new window.XMLHttpRequest();
+
         // 비동기적으로 처리하기 위한 콜백
         // 데이터를 요청하는 작업이 끝났을 때 함수 호출
         //  - > 콜백
+        // onload - > load가 성공적으로 될 시
+        //             방식 2
+        // request.onload = function () {
+        //     var notices = JSON.parse(request.responseText);
+        //     console.log(notices);
+        //     for (var i = 0; i < notices.length; i++) {
+        //         var tr = '<tr> \
+        //                         <td>'+ notices[i].id + '</td> \
+        //                         <td><a href="detail.html">'+ notices[i].title + '</a></td> \
+        //                         <td>'+ notices[i].writerId + '</td> \
+        //                         <td> \
+        //                         2019-08-18 \
+        //                         </td> \
+        //                         <td>146</td>\
+        //                       </tr>';
+
+        //         tbody.insertAdjacentHTML('beforeend', tr);
+        //     }
+        // }
+
+        //              방식 1
         // onreadystatechange  - > 스테이트 상태가 변할때 마다 호출
         // 0 - >
         // 1 - > 
         // 2 - >
         // 3 - >
-        // 4 - >
-        request.onreadystatechange = function() {
-            // console.log(request.readyState);
-            // console.log(request.responseText);
-            if(request.readyState==4){
-                var notices = JSON.parse(request.responseText);
-                console.log(notices);
-                for(var i=0; i<notices.length; i++){
-                    var tr = '<tr> \
-                            <td>'+notices[i].id+'</td> \
-                            <td><a href="detail.html">'+notices[i].title+'</a></td> \
-                            <td>'+notices[i].writerId+'</td> \
-                            <td> \
-                            2019-08-18 \
-                            </td> \
-                            <td>146</td>\
-                          </tr>';
-                tbody.insertAdjacentHTML('beforeend',tr);
-                }
-                
-            }
-                
-        }
+        // 4 - > 성공적인 로드
+        //                  
+        // request.onreadystatechange = function() {
+        //     // console.log(request.readyState);
+        //     // console.log(request.responseText);
+        //     if(request.readyState==4){
+        //         var notices = JSON.parse(request.responseText);
+        //         console.log(notices);
+        //         for(var i=0; i<notices.length; i++){
+        //             var tr = '<tr> \
+        //                     <td>'+notices[i].id+'</td> \
+        //                     <td><a href="detail.html">'+notices[i].title+'</a></td> \
+        //                     <td>'+notices[i].writerId+'</td> \
+        //                     <td> \
+        //                     2019-08-18 \
+        //                     </td> \
+        //                     <td>146</td>\
+        //                   </tr>';
+        //         tbody.insertAdjacentHTML('beforeend',tr);
+        //         }
+
+        //     }
+
+        // }
         // open 3번째 인자 true - > 동기형, false - > 비동기형(기본값)
         // 요청은 우선 동기적으로 해야함.
-        request.open("GET","/api/board/notice/list",true);
-        request.send();
+        // request.open("GET", "/api/board/notice/list?p="+page, true);
+        // request.send();
 
         // alert(request.responseText);
-    }
-   
 
-    
+
+
+    }
+    function load(page) {
+        tbody.innerHTML="";
+        if(page == undefined)
+            page=1;
+        var request = new window.XMLHttpRequest();
+        request.onload = function () {
+            var notices = JSON.parse(request.responseText);
+            console.log(notices);
+            for (var i = 0; i < notices.length; i++) {
+                var tr = '<tr> \
+                                <td>'+ notices[i].id + '</td> \
+                                <td><a href="detail.html">'+ notices[i].title + '</a></td> \
+                                <td>'+ notices[i].writerId + '</td> \
+                                <td> \
+                                2019-08-18 \
+                                </td> \
+                                <td>146</td>\
+                                <td><a href="">수정</a><a href="">삭제</a></td> \
+                              </tr>';
+
+                tbody.insertAdjacentHTML('beforeend', tr);
+            }
+        }
+        request.open("GET","/api/board/notice/list?p="+page, true);
+        request.send();
+    }
 });
 
 //================================  s10   ==================================
@@ -71,16 +132,16 @@ window.addEventListener("load", function () {
     var index = 0;
 
     showRoomImg.style.transition = "transform 2000ms";
-        // notify(함수를 호출하기 전에 확인하는 것)에서 호출순서정하기
-        // addEventListener 3번째 인자 true
-    showRoom.addEventListener("click",function(e) {
-        showRoomImg.style.transform="scale(1,1)";
+    // notify(함수를 호출하기 전에 확인하는 것)에서 호출순서정하기
+    // addEventListener 3번째 인자 true
+    showRoom.addEventListener("click", function (e) {
+        showRoomImg.style.transform = "scale(1,1)";
         console.log("부모다");
-        
-    },true);
-    
-        // 이벤트 버블링에 대한 문제와 해결 방법
-    
+
+    }, true);
+
+    // 이벤트 버블링에 대한 문제와 해결 방법
+
     // showRoom > showRoomImg
 
     // showRoom.onclick = function(e){
@@ -88,17 +149,17 @@ window.addEventListener("load", function () {
     //     console.log("부모다");
     // };
 
-    showRoomImg.onclick = function(e){
+    showRoomImg.onclick = function (e) {
         // 버블링 막기 - > stopPropagation
         // e.stopPropagation();
-        e.target.style.transform="scale(1.2,1.2)";
+        e.target.style.transform = "scale(1.2,1.2)";
         console.log("자식이다");
     };
-    
-        // 3. 더 나은 방법 -> 부모 객체에 이벤트 넘겨주기. - > 이벤트 버블링
-        // ul>li>img , img를 클릭하는 이벤트가 li->ul로 전달
-    ul.onclick = function(e){
-        if(e.target.tagName != "IMG")
+
+    // 3. 더 나은 방법 -> 부모 객체에 이벤트 넘겨주기. - > 이벤트 버블링
+    // ul>li>img , img를 클릭하는 이벤트가 li->ul로 전달
+    ul.onclick = function (e) {
+        if (e.target.tagName != "IMG")
             return;
         current.classList.remove("current");
         current = e.target.parentElement;
@@ -106,11 +167,11 @@ window.addEventListener("load", function () {
         var newImg = current.firstElementChild;
         showRoomImg.src = newImg.src;
     }
-// -------------------------------------------------
+    // -------------------------------------------------
 
-            // 2. 조금 개선한 방법
+    // 2. 조금 개선한 방법
     // var imgClickHandler = function(e){
-            
+
     //     current.classList.remove("current");
     //     current = e.target.parentElement;
     //     current.classList.add("current");
@@ -123,24 +184,24 @@ window.addEventListener("load", function () {
     //     imgs[i].onclick = imgClickHandler;
     // }
 
-// -------------------------------------------------
+    // -------------------------------------------------
 
-         // 1. 가장 복잡하고 가장 바람직하지 않은 방법
+    // 1. 가장 복잡하고 가장 바람직하지 않은 방법
     // var imgs = section.querySelectorAll("ul img");
     // for(var i=0; i<imgs.length; i++){
     //     imgs[i].onclick = function(e){
-            
+
 
     //         current.classList.remove("current");
     //         current = e.target.parentElement;
     //         current.classList.add("current");
 
-            // 현재 선틱된 녀석
+    // 현재 선틱된 녀석
     //         var newImg = current.firstElementChild;
     //         showRoomImg.src = newImg.src;
     //     }
     // }
-    
+
     prevBtn.onclick = function (e) {
 
         // 기본 행위를 막는 함수 preventDefault
@@ -202,24 +263,24 @@ window.addEventListener("load", function () {
     addBtn.onclick = function () {
 
         // 최종 방식 insertAdjacentHTML 사용 - > 노드가 추가되는 방식
-            var item = '<span class="item"> \
+        var item = '<span class="item"> \
                     <input type="checkbox"> \
                     <span class="label">안녕'+ (index++) + '</span> \
                 </span>';
-            
-            container.insertAdjacentHTML('beforeend',item);
+
+        container.insertAdjacentHTML('beforeend', item);
 
 
         // 대안 1 innterHTML 속성사용 - > 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
 
-            // 엔터도 구분자로 사용되기 때문에 한칸띄고 \ 이용
-            // var item = '<span class="item"> \
-            //                 <input type="checkbox"> \
-            //                 <span>안녕'+(index++)+'</span> \
-            //             </span>';
+        // 엔터도 구분자로 사용되기 때문에 한칸띄고 \ 이용
+        // var item = '<span class="item"> \
+        //                 <input type="checkbox"> \
+        //                 <span>안녕'+(index++)+'</span> \
+        //             </span>';
 
-            // 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
-            // container.innerHTML+=item;
+        // 수행 성능이 느림 -> 추가할 때 다시 처음부터 만드는 방식
+        // container.innerHTML+=item;
 
 
     };
@@ -228,27 +289,27 @@ window.addEventListener("load", function () {
 
         // ------- 선택 삭제 방식을 통한 구현 ---------
 
-// 선택된 노드 찾기 - > 보다 바람직한 방법 - > 슈도 클래스 이용 
+        // 선택된 노드 찾기 - > 보다 바람직한 방법 - > 슈도 클래스 이용 
         var chks = container.querySelectorAll("input[type=checkbox]:checked");
 
-// 선택된 노드 찾기 - > 바람직하지 않은 방법 - > 직접 모든 노드를 순회 하는 방식
-        
+        // 선택된 노드 찾기 - > 바람직하지 않은 방법 - > 직접 모든 노드를 순회 하는 방식
+
         // 1. item 목록 얻기
-            // var items = container.children;
-        
+        // var items = container.children;
+
         // 2. item을 순회하면서 checkbox 얻기
         // 3. checkbox의 상태가 선택되어 있는 것들을 추려서 배열에 담기.
-            // var chks =[];
-            // for(var i=0; i<items.length; i++){
-            //     var checkbox = items[i].querySelector("input[type='checkbox']");
-            //     if(checkbox.checked)
-            //         chks.push(checkbox);
-            // }
+        // var chks =[];
+        // for(var i=0; i<items.length; i++){
+        //     var checkbox = items[i].querySelector("input[type='checkbox']");
+        //     if(checkbox.checked)
+        //         chks.push(checkbox);
+        // }
 
         // 4. 콘솔 출력
-            console.log(chks);
-        
-        for(var i=0; i<chks.length; i++){
+        console.log(chks);
+
+        for (var i = 0; i < chks.length; i++) {
             chks[i].parentElement.remove();
         }
         // container.lastElementChild.remove();
@@ -257,7 +318,7 @@ window.addEventListener("load", function () {
     replaceBtn.onclick = function () {
 
         var chks = container.querySelectorAll("input[type=checkbox]:checked");
-        if(chks.length != 2){
+        if (chks.length != 2) {
             alert("2개만 선택하세요");
             return;
         }
@@ -266,7 +327,7 @@ window.addEventListener("load", function () {
         var item2 = chks[1].parentElement;
 
         var before = item2.previousElementSibling;
-       
+
         item1.replaceWith(item2);
 
         before.insertAdjacentElement('afterend', item1);
@@ -274,12 +335,12 @@ window.addEventListener("load", function () {
 
     };
 
-    changeBtn.onclick = function() {
+    changeBtn.onclick = function () {
         var chks = container.querySelectorAll("input[type=checkbox]:checked");
-        for(var i=0; i<chks.length; i++){
+        for (var i = 0; i < chks.length; i++) {
             var parent = chks[i].parentNode;
             var textSpan = parent.querySelector(".label");
-            textSpan.innerText="변경";
+            textSpan.innerText = "변경";
         }
     }
 });
@@ -301,7 +362,7 @@ window.addEventListener("load", function () {
         // var text = document.createTextNode("안녕");
         // 2. 컨테이너에 노드 추가 - > 노드에서 노드가 갖고 있는 appendChild
         // container.appendChild(text);
-  
+
         //              2. 엘리먼트 노드 - > 이전 기능 appendChild
         // 1. span 엘리먼트 객체 생성
         // var span = document.createElement("span");
@@ -311,7 +372,7 @@ window.addEventListener("load", function () {
         // span.appendChild(text);
         // 4. 컨테이너에 span 노드 추가
         // container.appendChild(span);
- 
+
         //              2. 엘리먼트 노드 - > 새로운 기능 append
         // 1. span 엘리먼트 객체 생성
         var span = document.createElement("span");
