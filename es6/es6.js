@@ -292,3 +292,57 @@ console.log(`total is ${exam3.total()}`);
     let {id,title,files:[img1],files:[,img2]} = notice;
     console.log(`id : ${id}, title : ${title}, files[0] : ${img1}, files[1] : ${img2}`);
 }
+
+// =========== ES6 컬렉션 ============
+
+// let set = new Set();
+// set.add(5);
+// set.add("5");
+// set.add(2);
+// set.add(5);
+// 아래와 같이 가능.
+
+// set
+// .add(5)
+// .add("5")
+// .add(2)
+// .add(5);
+
+// 일반적으로 배열에 데이터를 담아 셋을 생성
+let lotto = [2,3,4,3,3,2,5,6,1];
+let set = new Set(lotto);
+console.log(set.size);
+
+// Set에 담겨진 값 확인 - > has
+    // set.has(5); // - > true
+
+// 삭제
+    // if(set.has(5))
+    //     set.delete(5);
+    // console.log(set.size);
+
+// 모두 삭제
+    // set.clear();
+    // console.log(set.size);
+
+// ========== 순회 ===========
+// 1. 고전적인 방식
+set.forEach(function(v,k,s){
+    console.log(`key : ${k}, value : ${v}, collection : ${s}`);
+});
+// 2. for of
+for(let v of set)
+    console.log(`value : ${v}`);
+
+// 객체 추가
+let obj1 = {};
+let obj2 = {};
+
+let set2 = new Set();
+
+set2
+.add(obj1)
+.add(obj2);
+// 2가 나옴. obj1과 obj2는 다름.
+console.log(set2.size);
+console.log(set2);
