@@ -56,7 +56,7 @@ const template = String.raw`<section>\n\n\n
                     </section>`;
 console.log(template);
 
-let exam={};
+let exam = {};
 // 1.
 // exam.kor = 30;
 // exam.math = 40;
@@ -74,12 +74,12 @@ let eng = 50;
 
 // 키가 아닌 벨류만 적어도 가능
 // 3.
-exam = {kor,math,eng};
+exam = { kor, math, eng };
 console.log(exam);
 
 // ex1
 function test() {
-    return {kor,math,eng};
+    return { kor, math, eng };
 }
 
 // ex2
@@ -87,9 +87,9 @@ exam = {
     kor,
     eng,
     math,
-    total:function(){
+    total: function () {
         // this - > exam 안에 있는 kor과 eng - > 87,88번째 줄
-        return this.kor+this.eng;
+        return this.kor + this.eng;
     }
 }
 
@@ -98,16 +98,16 @@ exam = {
     kor,
     eng,
     math,
-    total(){
+    total() {
         // this - > exam 안에 있는 kor과 eng - > 98,99번째 줄
-        return this.kor+this.eng;
+        return this.kor + this.eng;
     }
 }
 
 // 사전지식
 // 함수를 사용하는 두 가지 방법
 // 기능을 가지는 함수를 정의한 것
-function print(){
+function print() {
     console.log("hello");
 }
 
@@ -118,15 +118,15 @@ print();
 //     var kor;
 //     var eng;
 //     var math;
-    function Exam(){
-        this.kor = 10;
-        this.eng = 20;
+function Exam() {
+    this.kor = 10;
+    this.eng = 20;
 
-        this.total = function() {
-            var kor = 30;
-            return this.kor;
-        }
-    };
+    this.total = function () {
+        var kor = 30;
+        return this.kor;
+    }
+};
 // };
 
 var exam3 = new Exam();
@@ -137,29 +137,29 @@ console.log(`total is ${exam3.total()}`);
 // ========== Destructuring #1-1 =============
 {
     let exam = {
-        kor:30,
-        eng:40,
-        math:50
+        kor: 30,
+        eng: 40,
+        math: 50
     };
-    
+
     // let kor = exam.kor;
     // let eng = exam.eng;
     // console.log(`kor : ${kor}, eng : ${eng}`);
 
     //  143~145 Destructuring을 아래와 같이 편하게 해줌
     // exam안의 kor,eng를 지역변수로 만들어서 대입. 순서상관X
-    let {eng,kor} = exam;
+    let { eng, kor } = exam;
     console.log(`kor : ${kor}, eng : ${eng}`);
 
-// ========== Destructuring #1-2 =============
-// exam의 값이 변했을 때 대입 하는 방법 ()사용
+    // ========== Destructuring #1-2 =============
+    // exam의 값이 변했을 때 대입 하는 방법 ()사용
     exam.kor = 100;
     exam.eng = 500;
-    ({eng,kor} = exam);
+    ({ eng, kor } = exam);
     console.log(`kor : ${kor}, eng : ${eng}`);
 
     exam.kor = 50;
-    ({kor}=exam);
+    ({ kor } = exam);
     console.log(`kor : ${kor}, eng : ${eng}`);
 }
 
@@ -168,25 +168,25 @@ console.log(`total is ${exam3.total()}`);
 
 {
     let exam = {
-        kor:30,
-        eng1:40,
-        math:50
+        kor: 30,
+        eng1: 40,
+        math: 50
     };
 
     {
-         // exam에 없는 속성도 사용이 가능.
-    let {eng1,kor,total} = exam;
-    console.log(`kor : ${kor}, eng : ${eng1}, total : ${total}`);
+        // exam에 없는 속성도 사용이 가능.
+        let { eng1, kor, total } = exam;
+        console.log(`kor : ${kor}, eng : ${eng1}, total : ${total}`);
 
-    // total에 값 대입
-    ({total=0}=exam);
-    console.log(`kor : ${kor}, eng : ${eng1}, total : ${total}`);
+        // total에 값 대입
+        ({ total=0 } = exam);
+        console.log(`kor : ${kor}, eng : ${eng1}, total : ${total}`);
     }
-   
+
 
     // 속성이름 별칭주기
     {
-        let {eng1:english,kor,total=0} = exam;
+        let { eng1: english, kor, total = 0 } = exam;
         // eng1을 english로 사용해야함.
         // console.log(`kor : ${kor}, eng : ${eng1}, total : ${total}`);
         console.log(`kor : ${kor}, eng : ${english}, total : ${total}`);
@@ -198,52 +198,52 @@ console.log(`total is ${exam3.total()}`);
 // 중첩된 객체의 속성
 {
     let exam = {
-        kor:30,
-        eng:40,
-        math:50,
-        student :{
-            name:"newlec",
-            phone:"010-1234-5678"
+        kor: 30,
+        eng: 40,
+        math: 50,
+        student: {
+            name: "newlec",
+            phone: "010-1234-5678"
         }
     };
 
     // exam안의 student
-    let {student} = exam;
+    let { student } = exam;
     console.log(student);
-    
-    {
-    // exam안의 student안의 name값 꺼내기.
-    let {student:{name}} = exam;
-    console.log(name); 
-    }
-    
 
-    let {kor,student:{name,phone}} = exam;
+    {
+        // exam안의 student안의 name값 꺼내기.
+        let { student: { name } } = exam;
+        console.log(name);
+    }
+
+
+    let { kor, student: { name, phone } } = exam;
     console.log(`kor : ${kor}, student name : ${name}, student phone : ${phone}`);
 }
 
 // ========== Destructuring #4 =============
 // 매개변수
 {
-    function printExam({kor,eng,math /*destructuring*/}) {
+    function printExam({ kor, eng, math /*destructuring*/ }) {
         console.log(`kor : ${kor}, eng : ${eng}, math : ${math}`);
     }
-    let {kor=10,eng=20,math=30} = {}; // destructuring
-    printExam({kor,eng,math}); // create Object
+    let { kor = 10, eng = 20, math = 30 } = {}; // destructuring
+    printExam({ kor, eng, math }); // create Object
 }
 
 // ========== Destructuring #5 =============
 // Array destructuring
 {
-    let kors = [10,20,30];
-    let [k1,k2,k3] = kors;
+    let kors = [10, 20, 30];
+    let [k1, k2, k3] = kors;
 
     console.log(`k1 : ${k1}, k2 : ${k2}, k3 : ${k3},`);
 
     // 다른 값 대입
-    [k1] = [100,200,300]; // 100 대입
-    [,k2] = [100,200,300]; // 200 대입
-    [,,k3] = [100,200,300]; // 300 대입
+    [k1] = [100, 200, 300]; // 100 대입
+    [, k2] = [100, 200, 300]; // 200 대입
+    [, , k3] = [100, 200, 300]; // 300 대입
     console.log(`k1 : ${k1}, k2 : ${k2}, k3 : ${k3},`);
 
     //꼼수 swapping
@@ -251,8 +251,8 @@ console.log(`total is ${exam3.total()}`);
     let y = 3;
     let z = 5;
     console.log(`x:${x},y:${y},z:${z}`);
-    
-        //교체(Swap) 순서 재배열
+
+    //교체(Swap) 순서 재배열
     //    let t = x;
     //    x = y;
     //    y = t;
@@ -264,7 +264,7 @@ console.log(`total is ${exam3.total()}`);
 
     //중첩 배열 뽀개기
     {
-        let kors = [10,20,30,[40,50]];
+        let kors = [10, 20, 30, [40, 50]];
         let [
             kor1,
             kor2,
@@ -281,68 +281,151 @@ console.log(`total is ${exam3.total()}`);
 
     // 객체와 배열 섞기
     let notice = {
-        id:1,
-        title:"공지사항",
-        files:[
+        id: 1,
+        title: "공지사항",
+        files: [
             "img1.png",
             "img2.png"
         ]
     };
 
-    let {id,title,files:[img1],files:[,img2]} = notice;
+    let { id, title, files: [img1], files: [, img2] } = notice;
     console.log(`id : ${id}, title : ${title}, files[0] : ${img1}, files[1] : ${img2}`);
 }
 
-// =========== ES6 컬렉션 ============
+{   // ========== Set ============
+    // let set = new Set();
+    // set.add(5);
+    // set.add("5");
+    // set.add(2);
+    // set.add(5);
+    // 아래와 같이 가능.
 
-// let set = new Set();
-// set.add(5);
-// set.add("5");
-// set.add(2);
-// set.add(5);
-// 아래와 같이 가능.
+    // set
+    // .add(5)
+    // .add("5")
+    // .add(2)
+    // .add(5);
 
-// set
-// .add(5)
-// .add("5")
-// .add(2)
-// .add(5);
+    // 일반적으로 배열에 데이터를 담아 셋을 생성
+    let lotto = [2, 3, 4, 3, 3, 2, 5, 6, 1];
+    let set = new Set(lotto);
+    console.log(set.size);
 
-// 일반적으로 배열에 데이터를 담아 셋을 생성
-let lotto = [2,3,4,3,3,2,5,6,1];
-let set = new Set(lotto);
-console.log(set.size);
-
-// Set에 담겨진 값 확인 - > has
+    // Set에 담겨진 값 확인 - > has
     // set.has(5); // - > true
 
-// 삭제
+    // 삭제
     // if(set.has(5))
     //     set.delete(5);
     // console.log(set.size);
 
-// 모두 삭제
+    // 모두 삭제
     // set.clear();
     // console.log(set.size);
 
-// ========== 순회 ===========
-// 1. 고전적인 방식
-set.forEach(function(v,k,s){
-    console.log(`key : ${k}, value : ${v}, collection : ${s}`);
+    // ========== 순회 ===========
+    // 1. 고전적인 방식 forEach
+    set.forEach(function (v, k, s) {
+        console.log(`key : ${k}, value : ${v}, collection : ${s}`);
+    });
+    // 2. for of
+    for (let v of set)
+        console.log(`value : ${v}`);
+
+    // 객체 추가
+    let obj1 = {};
+    let obj2 = {};
+
+    let set2 = new Set();
+
+    set2
+        .add(obj1)
+        .add(obj2);
+    // 2가 나옴. obj1과 obj2는 다름.
+    console.log(set2.size);
+    console.log(set2);
+}
+
+// ========== Map ============
+{
+    let map = new Map();
+    map.set("id", 1);
+    console.log(map.size);
+    console.log(map);
+    map.set("title", "제목이다");
+    console.log(map.size);
+    console.log(map);
+
+    // 아래와 같이 추가 X, - > 아이템을 추가할 땐 set만 사용
+    //  아래는 모든 객체의 속성을 주는 것.
+    //map["content"] = "hello";
+    // map.content = "hello";
+    // console.log(map.content);
+    // console.log(map.size);
+    // console.log(map);
+
+    // has() - > 값 확인, delete() - > 삭제, clear() ->모두 삭제
+    // get() - > 키의 벨류 값
+    console.log(map.get("title"));
+
+    // ========== 순회 ==============
+    // 키 순회 for of
+    for(k of map.keys())
+        console.log(`key : ${k}`);
+    
+    // 값 순회 for of
+    for(v of map.values())
+        console.log(`value : ${v}`);
+
+    // 1. 키와 값 순회 for of
+    for(let [k,v] of map.entries())
+        console.log(`key : ${k}, value : ${v}`);
+
+    // 2. 키와 값 순회 forEach 고전적 방식
+    map.forEach(function(v, k){
+        console.log(`key : ${k}, value : ${v}`);
+    });
+}
+
+// Function
+// ======== Rest Parameter/Spread Operator
+// ======== Default Value/Arrow Function
+{
+    // ========== Default Value =============
+    function add(x=0,y=0) { // 기본값 넣어주기
+    //function add(x=0, y=x) { 가능
+
+    // 402번째 줄에서 넘겨준 1개의 인자가 출력
+    // 394줄에서의 2개가 아님
+        console.log(arguments.length);
+        let result = x+y;
+        return result;
+    }
+    console.log(add(3));
+
+
+    // 함수로 기본값 대입.
+    function getValue() {
+        return 30;
+    }
+
+    function add2(x=0, y=getValue()) {
+        console.log(x+y);
+    }
+
+    add2();
+}
+
+{
+//============ Arrow Function ==========
+// window.addEventListener("load",function(e) {
+//    console.log("loaded"); 
+// });
+
+// 아래와 같이 함.
+window.addEventListener("load",(e)=> {
+   console.log("loaded"); 
 });
-// 2. for of
-for(let v of set)
-    console.log(`value : ${v}`);
+}
 
-// 객체 추가
-let obj1 = {};
-let obj2 = {};
-
-let set2 = new Set();
-
-set2
-.add(obj1)
-.add(obj2);
-// 2가 나옴. obj1과 obj2는 다름.
-console.log(set2.size);
-console.log(set2);
