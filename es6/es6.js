@@ -118,20 +118,20 @@ print();
 //     var kor;
 //     var eng;
 //     var math;
-function Exam() {
-    this.kor = 10;
-    this.eng = 20;
+    // function Exam() {
+    //     this.kor = 10;
+    //     this.eng = 20;
 
-    this.total = function () {
-        var kor = 30;
-        return this.kor;
-    }
-};
+    //     this.total = function () {
+    //         var kor = 30;
+    //         return this.kor;
+    //     }
+    // };
 // };
 
-var exam3 = new Exam();
-console.log(exam3);
-console.log(`total is ${exam3.total()}`);
+// var exam3 = new Exam();
+// console.log(exam3);
+// console.log(`total is ${exam3.total()}`);
 
 
 // ========== Destructuring #1-1 =============
@@ -429,3 +429,237 @@ window.addEventListener("load",(e)=> {
 });
 }
 
+// OOP
+// 캡슐화(보호 모드?), 상속, 다형성(인터페이스?)
+
+// 옛날 방식의 클래스 정의
+/*{
+    function Exam(kor=0,eng=0,math=0) {
+        this.kor = kor;
+        this.eng = eng;
+        this.math = math;
+            // 아래 함수의 문제점 - > 객체가 만들어질 때마다 함수가 계속해서 만들어짐.
+            // exam.total === exam2.total - > false 
+            // 이를 위한 해결 법 prototype 
+            // this.total = function() {
+            //     return this.kor + this.eng + this.math;
+            // }
+    }
+        // prototype - > 모든 자바스크립트 객체의 틀을 정하는 것(extends).  옛날 방식이지만 실제 동작은 같음. 
+    Array.prototype.asdasd = function() {
+        return "protoArray asdasd";
+    }
+    let ar = [];
+    console.log(ar.asdasd());
+        
+    let aa ={
+        com : 30,
+        art : 50,
+        avg : function() {
+            return "avg!!";
+        }
+    }
+    
+    Exam.prototype = aa;
+
+        // Exam.prototype = {
+        //     total : function() {
+        //          return this.kor + this.eng + this.math;
+        //     }
+        // }
+        // 위 아래 동일, 옛날 방식이지만 실제 동작은 같음. 
+    Exam.prototype.total = function() {
+        return this.kor + this.eng + this.math;
+    }
+    
+    let exam3 = new Exam(10,10,10);
+    console.log(exam3.avg());
+    
+    let exam = new Exam(20,30,50);
+    let exam2 = new Exam(20,30,50);
+    console.log(typeof exam);
+    typeof exam == "object" ? console.log("yes") : console.log("no");
+    exam ==  exam2 ? console.log("yes") : console.log("no");
+    console.log(`total : ${exam.total()}`);
+}
+*/
+
+// ====================== 현재 방식의 클래스 정의 ===================
+{
+    class Exam{
+        // private 선언
+        #kor;
+        #eng;
+        #math;
+        // static 멤버
+        static #count = 0;
+        
+        constructor(kor=0,eng=0,math=0){
+            this.#kor = kor;
+            this.#eng = eng;
+            this.#math = math;
+            Exam.#count++;
+        }
+
+// getter,setter - > get,set을 쓰면 호출시 속성처럼 사용 가능.
+        get kor(){
+            return this.#kor;
+        }
+        set kor(value){
+            this.#kor = value;
+        }
+        get eng(){
+            return this.#eng;
+        }
+        set eng(value){
+            this.#eng = value;
+        }
+
+        get math(){
+            return this.#math;
+        }
+        set math(value){
+            this.#math = value;
+        }
+
+        static get count(){
+            return Exam.#count;
+        }
+        
+
+        #tot(){
+            return 10000000;
+        }
+        total(){
+            return this.#kor + this.#eng + this.#math+this.#tot();
+        }
+    }
+
+
+    let exam = new Exam(20,30,50);
+    let exam2 = new Exam(20,30,50);
+    let exam3 = new Exam(20,30,50);
+    console.log(`total : ${exam.total()}`);
+
+    //    setter
+    exam.kor = 5;
+    //    getter
+    console.log(exam.kor);
+    // console.log(`kor : ${exam.kor}`);
+
+    console.log(Exam.count);
+
+}
+
+// ====================== 상속 prototype - > extends =====================
+{
+    class Exam{
+        // private 선언
+        #kor;
+        #eng;
+        #math;
+        // static 멤버
+        static count = 0;
+        
+        constructor(kor=0,eng=0,math=0){
+            this.#kor = kor;
+            this.#eng = eng;
+            this.#math = math;
+            Exam.count++;
+        }
+
+// getter,setter - > get,set을 쓰면 호출시 속성처럼 사용 가능.
+        get kor(){
+            return this.#kor;
+        }
+        set kor(value){
+            this.#kor = value;
+        }
+        get eng(){
+            return this.#eng;
+        }
+        set eng(value){
+            this.#eng = value;
+        }
+
+        get math(){
+            return this.#math;
+        }
+        set math(value){
+            this.#math = value;
+        }
+
+        get count(){
+            return Exam.count;
+        }
+        
+
+        #tot(){
+            return 10000000;
+        }
+        total(){
+            return this.#kor + this.#eng + this.#math;
+        }
+    }
+    
+    class NewlecExam extends Exam{
+        #com;
+        constructor(kor,eng,math,com){
+            super(kor,eng,math);
+            this.#com = com;
+        }
+
+        
+        set com(value){
+            this.#com = value;
+        }
+        get com(){
+            return this.#com;
+        }
+
+        total(){
+            return super.total()+this.#com;   
+        }
+    }
+
+    let exam = new NewlecExam(1,2,3,4);
+    console.log(`newlecExam kor : ${exam.kor}, eng : ${exam.eng} , math : ${exam.math}, com : ${exam.com}`);
+    console.log(`newlecExam total : ${exam.total()}`);
+    
+
+}
+
+/*
+1. 캡슐화
+class Exam{
+
+    constructor(){}
+
+}
+2. private
+class Exam{
+    #kor;
+
+}
+3. staic & getter/setter
+class Exam{
+    static #count = 0;
+    constructor(){
+        Exam.#count++;
+    }
+
+    static get count(){
+        return Exam.#count;
+    }
+
+    getCount(){
+        return Exam.#count;
+    }
+}
+
+new Exam();
+new Exam();
+console.log(Exam.count);
+
+4. extends / super / override
+*/
