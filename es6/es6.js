@@ -663,3 +663,122 @@ console.log(Exam.count);
 
 4. extends / super / override
 */
+
+// ========= new.target Metaproperty
+{
+    function Exam(kor,eng,math) {
+        console.log(this);
+        console.log(this instanceof Exam);
+        this.kor = kor;
+        this.eng = eng;
+        this.math = math;
+    }
+    let exam = new Exam(0,0,0);
+}
+{
+    function Alert(selector) {
+        this.section = document.querySelector(selector);
+        this.btn1 = this.section.querySelector(".btn1");
+        this.span = this.section.querySelector("div");
+        this.x = 30;
+        this.btn1.onclick = this.btn1Click;
+    }
+
+    Alert.prototype = {
+        btn1Click : function() {
+            console.log("aaa");
+            // this가 의미가 없음. this가 뭔지 모름
+            // this.span.innerHTML = "hi";
+        },
+
+        test : function(a) {
+            console.log(`x : ${this.x}, a : ${a}`);
+        }
+    }
+}
+{
+    window.addEventListener("load",function() {
+        let alert = new Alert(".s1");
+        // instance method, 객체를 통한 호출 x=30이 나옴.
+        alert.test(3);
+
+        // static method , 함수만 전달 받음 this가 뭔지 모름
+        let f1 = alert.test;
+        f1(3);
+
+        // ========== 객체를 전달하는 함수 ===========
+        // 1. 객체만 전달할 수 있는 함수 apply
+        f1.apply(alert);
+
+        // 2. 객체 + 다른 인자를 전달할 수 있는 함수 call
+        f1.call(alert,10);
+    });
+}
+
+// function의 3가지 종류에 따른 체크
+// static / instance(instance of) / constructor(new.target) - > new를 통해 만들어졌는가
+
+// ======= iterator ========
+{
+    // function *iterator() {
+    //     yield "안녕1";
+    //     yield "안녕2";
+    //     yield "안녕3";
+    // }
+
+    let data = [10,30,42,32,1,5];
+    // 사실 iterator가 아닌 generator임. - > * - > iterator 반환.
+    // function *a() {
+    //     for(var i=0; i<data.length; i++)
+    //         yield data[i];
+    // }
+    //let itr = a(); // generator이 iterator 객체를 반환
+
+    function *iterator() {
+        for(let i=0; i<data.length; i++)
+            yield data[i];
+    }
+
+    let itr = iterator();
+    // itr.next() - > {value : ? , done : ?} 식으로 반환함
+    // 마지막 인덱스까지 갔을 때 done - > true 반환
+    let result = itr.next();
+    while(!result.done){
+        console.log(result.value);
+        result = itr.next();
+    }
+
+    // console.log(itr.next());
+    // console.log(itr.next());
+    // console.log(itr.next().value);
+
+    // javaScript - > iterator을 구현할 필요가 없음
+    // Generator이 iterator을 구현해줌. - > function *
+    // -> iterator를 반환함
+}
+
+// iterator 실습 
+{
+    class List{
+        #data
+        constructor(){
+            this.#data = [];
+        }
+
+        add(items){
+            this.#data.push(items);
+        }
+
+        get(index){
+            return this.#data[index];
+        }
+
+        *itreator(){ // generator 
+            
+            for(let i=0; i<this.#data.length; i++)
+                yield this.#data[i];
+
+        }
+    }
+
+}
