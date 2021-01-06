@@ -669,11 +669,13 @@ console.log(Exam.count);
     function Exam(kor,eng,math) {
         console.log(this);
         console.log(this instanceof Exam);
+        console.log(new.target);
         this.kor = kor;
         this.eng = eng;
         this.math = math;
     }
     let exam = new Exam(0,0,0);
+    let exam1 = Exam(0,0,0);
 }
 {
     function Alert(selector) {
@@ -716,7 +718,7 @@ console.log(Exam.count);
 }
 
 // function의 3가지 종류에 따른 체크
-// static / instance(instance of) / constructor(new.target) - > new를 통해 만들어졌는가
+// static / instance(instanceof) / constructor(new.target) - > new를 통해 만들어졌는가
 
 // ======= iterator ========
 {
@@ -773,7 +775,7 @@ console.log(Exam.count);
             return this.#data[index];
         }
 
-        *itreator(){ // generator 
+        *iterator(){ // generator 
             
             for(let i=0; i<this.#data.length; i++)
                 yield this.#data[i];
@@ -781,4 +783,214 @@ console.log(Exam.count);
         }
     }
 
+    let list = new List();
+    list.add(3);
+    list.add(9);
+
+    let it = list.iterator();
+    let result = it.next();
+    while(!result.done){
+        console.log(result.value);
+        result = it.next();
+    }
+    
+
+    for(n of list.iterator())
+        console.log(`n : ${n}`);
+    
+    let ar = [...list.iterator()]; // spread operator
+    console.log(ar);
+
+    function print(a,b,c) {
+        console.log(`a: ${a}, b : ${b}, c : ${c}`);
+    }
+
+    print(...ar);
+
+}
+let age = "age2";
+let person = {
+    weight : 30,
+    [age] : 15
+};
+
+console.log(person.weight);
+console.log(person["weight"]);
+let weight = "weight";
+console.log(person[weight]);
+
+console.log(person.age2);
+console.log(person[age]);
+
+// ========== Symbol ==========
+{
+    class List{
+        #data
+        constructor(){
+            this.#data = [];
+        }
+
+        add(items){
+            this.#data.push(items);
+        }
+
+        get(index){
+            return this.#data[index];
+        }
+
+        *[Symbol.iterator](){ // generator 
+            
+            for(let i=0; i<this.#data.length; i++)
+                yield this.#data[i];
+
+        }
+    }
+
+    let list = new List();
+    list.add(3);
+    list.add(9);
+
+    for(n of list)
+        console.log(`n : ${n}`);
+}
+
+{
+    // 난 라이브러리...누구든지 내 기능을 이용해서
+    // 객체의 정보를 출력할 수 있습니다.
+    // 단 그러려면 print 함수를 구현해 주세요~
+    // 내가 약속한 함수가 구현되어있나?
+    // 내가 정하겠어... 함수의 약속을
+    //let print = Symbol('print');
+    Symbol.for("print");
+    let print = Symbol.for("print");
+    Symbol.for("asd");
+    let asd = Symbol.for("asd");
+    function printObject(obj){
+        
+        console.log(obj[print]());
+    }
+
+    class A /*implements Printable*/{
+        constructor(){
+            
+        }
+        // printObject와 약속한 print 함수인가?
+        // 아님 우연치 않게 이름이 같은 것인지..
+        [print](){ 
+            console.log("hello");
+        }
+        // print(){
+        //     console.log("heelo2");
+        // }
+    }
+
+    class B{
+        constructor(){
+
+        }
+        // printObject와 약속한 print 함수인가?
+        // 아님 우연치 않게 이름이 같은 것인지..
+        [print](){
+            return 1+3;
+        }
+
+        f(){
+            return 3;
+        }
+    }
+
+    let a = new A();
+    printObject(a);
+    console.log(A.prototype[asd]);
+    console.log(B.prototype[print]);
+
+    console.log(A.prototype[print]=== B.prototype[print]);
+    console.log(A.prototype[print] == B.prototype[print]);
+    console.log(A.prototype.print === B.prototype.print);
+    console.log(A.prototype.print == B.prototype.print);
+
+
+
+}
+
+
+// ============ Async[Promise] =================
+// 비동기 작업을 함수 중첩으로 해결하는 JavaScript
+// 해결하기 위한 promise
+
+// 동기식 요청
+{
+    function getNotice(id) {
+        console.log('동기식 get 요청');
+        return {id:1, title:'제목1'};
+    }
+
+    let notice = getNotice(1);
+    console.log(`동기식 notice title : ${notice.title}`);
+
+}
+//  함수의 중첩이 깊어지는 기존 비동기 처리 방식 - > 함수 위임
+{
+    function getNotice(id,call) {
+        console.log('비동기식 get 요청');
+        // 시간이 오래 걸리는 가정
+        setTimeout(function() {
+            
+            let notice = {id:1, title:'제목1'};
+            call(notice);
+        },5000);
+        console.log("???");
+        
+    }
+  
+
+    let notice = getNotice(1,function(notice) {
+        console.log(`비동기식 notice title : ${notice.title}`);
+    });
+
+    console.log(notice); // 메인 스레드는 계속 됨. - > undefined
+}
+{
+    setTimeout(function() {
+        console.log("호호");
+        setTimeout(function() {
+            console.log("하하");
+        },1000);
+    },1000);
+}
+
+//  비동기 처리 방식 Promise
+{
+    function getNotice(id) {
+        console.log('비동기식 promise get 요청');
+        // 시간이 오래 걸리는 가정
+        return new Promise(resolve =>{
+            setTimeout(function() {
+            
+                let notice = {id:1, title:'제목1'};
+                resolve(notice);
+            },5000);
+            console.log("???");
+        })
+        
+        
+    }
+
+    // let notice = getNotice(1,function(notice) {
+    //     console.log(`비동기식 notice title : ${notice.title}`);
+    // });
+
+    let aa = getNotice(1);
+    aa.then(function(notice) {
+        console.log(`비동기식 promise notice title : ${notice.title}`);
+    })
+    
+}
+{
+    setTimeout(function() {
+        console.log("호호");
+        setTimeout(function() {
+            console.log("하하");
+        },1000);
+    },1000);
 }
