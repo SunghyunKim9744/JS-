@@ -939,7 +939,7 @@ console.log(person[age]);
     console.log(`동기식 notice title : ${notice.title}`);
 
 }
-//  함수의 중첩이 깊어지는 기존 비동기 처리 방식 - > 함수 위임
+//  함수의 중첩이 깊어지는 기존 비동기 처리 방식
 {
     
     function getNotice(id,call) {
@@ -962,14 +962,6 @@ console.log(person[age]);
     console.log("메인이다."); // 메인 스레드는 계속 됨.
     
 }
-{
-    setTimeout(function() {
-        console.log("호호");
-        setTimeout(function() {
-            console.log("하하");
-        },1000);
-    },1000);
-}
 
 //  비동기 처리 방식 Promise
 {
@@ -984,9 +976,14 @@ console.log(person[age]);
             },5000);
             console.log("???");
         })
-        
-        
     }
+
+    let p = getNotice(1);
+    p.then(
+        function(notice) {
+            console.log(`비동기식 notice title : ${notice.title}`);
+        }
+    )
 
     //  callback 함수
     // let notice = getNotice(1,function(notice) {
@@ -1000,15 +997,17 @@ console.log(person[age]);
     // })
 
     // ======= promise 호출방법 2. - 동기
-    // (function(){}();) 함수 바로 호출
-    (async function(){
-        
-    let notice = await getNotice(1);
-    console.log(`동기식 promise notice title : ${notice.title}`);
-    console.log("promise 동기 메인이다."); // 메인 스레드는 계속 됨.
-    }());
+    {
+        // (function(){}();) 함수 바로 호출
+        (async function(){
+            
+        let notice = await getNotice(1);
+        console.log(`동기식 promise notice title : ${notice.title}`);
+        console.log("promise 동기 메인이다."); // 메인 스레드는 계속 됨.
+        }());
 
-    console.log("메인이다."); // 메인 스레드는 계속 됨.
+        console.log("메인이다."); // 메인 스레드는 계속 됨.
+    }
     
 }
 
@@ -1097,6 +1096,7 @@ console.log(person[age]);
                 try{
                     
                     let value = nextInt(10);
+                    console.log(value);
                     if(value > 5)
                         throw new Error("big num");
                 }
@@ -1137,4 +1137,107 @@ console.log(person[age]);
     // .then(function() {
     //     console.log("promise all 성공");
     // })
+}
+
+
+// =========== Promise 정리(then)===========
+
+{
+    function getNotice(page){
+        return new Promise((resolve, reject)=>{
+            setTimeout(function(){
+                let notice = {id:1, title:"notice title"};
+                //resolve(notice);
+                reject("aaaa");
+                console.log("작업완료");
+            }, 1000);
+        });
+    }
+
+    //let notice = getNotice();
+    let p = getNotice(1);
+    //-----------------------
+    p
+    .then(
+        notice=>{
+            console.log("resolve 1 작업");
+            console.log(notice);
+            return notice.title;
+        },
+        reason=>{
+            console.log("reject 1 작업");
+            console.log(reason);
+        }
+    )
+    .catch(
+        reason =>{
+            console.log(`catch 1 : ${reason}`);
+        }
+    )
+    .then(
+        title=>{
+            console.log("resolve 2 작업");
+            console.log(title);
+            return title.length;
+        },
+        reason=>{
+            console.log("reject 2 작업");
+            console.log(reason);
+           
+        }
+    )
+    .catch(
+        reason =>{
+            console.log(`catch 2 : ${reason}`);
+        }
+    )
+    .then(
+        count=>{
+            console.log("resolve 3 작업");
+            console.log(count);
+        },
+        reason=>{
+            console.log("reject 3 작업");
+            console.log(reason);
+        }
+    )
+    .catch(
+        reason =>{
+            console.log(`catch 3 : ${reason}`);
+        }
+    )
+}
+
+{
+    // Promise.all();   -- > 모든 비동기작업이 끝났을 때
+    // Promise.any();   -- > 여러 개의 비동기작업중 가장 빨리 끝난거
+    // Promise.resolve();
+    // Promise.reject();
+
+    // 꼬리물기
+    // let notice = {id:1, title:"title"};
+    // Promise
+    // .resolve(notice)
+    // .then(notice=>{
+    //     console.log(notice)
+    //     return notice.title;
+    // })
+    // .then(title=>{
+    //     console.log(title);
+    // });
+
+    let p1 = 1;
+    let p2 = new Promise((resolve)=>{
+        setTimeout(function(){resolve(600);},1000);
+    });
+    let p3 = new Promise((resolve)=>{
+        setTimeout(function(){resolve(300);},500);
+    });
+
+    Promise.all([p1,p2,p3])
+    .then((values=>{
+        console.log(values);
+        console.log(values[2]);
+    }));
+
 }
