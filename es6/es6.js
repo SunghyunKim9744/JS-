@@ -861,8 +861,8 @@ console.log(person[age]);
     // 내가 약속한 함수가 구현되어있나?
     // 내가 정하겠어... 함수의 약속을
     //let print = Symbol('print');
-    Symbol.for("print");
-    let print = Symbol.for("print");
+    // Symbol.for("print");
+    let print = Symbol.for();
     Symbol.for("asd");
     let asd = Symbol.for("asd");
     function printObject(obj){
@@ -900,6 +900,7 @@ console.log(person[age]);
     }
 
     let a = new A();
+    //console.log(a);
     printObject(a);
     console.log(A.prototype[asd]);
     console.log(B.prototype[print]);
@@ -918,6 +919,15 @@ console.log(person[age]);
 // 비동기 작업을 함수 중첩으로 해결하는 JavaScript
 // 해결하기 위한 promise
 
+{
+    setTimeout(function() {
+        console.log("호호");
+        setTimeout(function() {
+            console.log("하하");
+        },1000);
+    },1000);
+}
+
 // 동기식 요청
 {
     function getNotice(id) {
@@ -931,6 +941,7 @@ console.log(person[age]);
 }
 //  함수의 중첩이 깊어지는 기존 비동기 처리 방식 - > 함수 위임
 {
+    
     function getNotice(id,call) {
         console.log('비동기식 get 요청');
         // 시간이 오래 걸리는 가정
@@ -940,15 +951,16 @@ console.log(person[age]);
             call(notice);
         },5000);
         console.log("???");
-        
+    
     }
   
-
+    //  콜백 함수
     let notice = getNotice(1,function(notice) {
         console.log(`비동기식 notice title : ${notice.title}`);
     });
 
-    console.log(notice); // 메인 스레드는 계속 됨. - > undefined
+    console.log("메인이다."); // 메인 스레드는 계속 됨.
+    
 }
 {
     setTimeout(function() {
@@ -976,21 +988,153 @@ console.log(person[age]);
         
     }
 
+    //  callback 함수
     // let notice = getNotice(1,function(notice) {
     //     console.log(`비동기식 notice title : ${notice.title}`);
     // });
 
-    let aa = getNotice(1);
-    aa.then(function(notice) {
-        console.log(`비동기식 promise notice title : ${notice.title}`);
-    })
+    // ======= promise 호출방법 1. - 비동기
+    // let promise = getNotice(1);
+    // promise.then(function(notice) {
+    //     console.log(`비동기식 promise notice title : ${notice.title}`);
+    // })
+
+    // ======= promise 호출방법 2. - 동기
+    // (function(){}();) 함수 바로 호출
+    (async function(){
+        
+    let notice = await getNotice(1);
+    console.log(`동기식 promise notice title : ${notice.title}`);
+    console.log("promise 동기 메인이다."); // 메인 스레드는 계속 됨.
+    }());
+
+    console.log("메인이다."); // 메인 스레드는 계속 됨.
     
 }
+
+// promise 성공시, 실패시
 {
-    setTimeout(function() {
-        console.log("호호");
-        setTimeout(function() {
-            console.log("하하");
-        },1000);
-    },1000);
+    function getNotice(id) {
+        console.log('비동기식 promise get 요청');
+        
+        // 시간이 오래 걸리는 가정
+        // resolove - > 성공시, reject - > 실패시 
+        return new Promise((resolve,reject) =>{
+            setTimeout(function() {
+            
+                let notice = {id:1, title:'제목1'};
+                resolve(notice);
+                //reject({status : "실패", message : "너무 큰 수"});
+            },5000);
+            console.log("???");
+        })
+    }
+
+    // getNotice(1)
+    // .then(
+    //     function(value) {
+    //         console.log(value);
+    //     },
+    //     function(value) {
+    //         console.log(value);
+    //     }
+    // ) 
+
+    //           ||
+
+    // let promise = getNotice(1);
+    // promise
+    // .then(
+    //     function(value) {
+    //         console.log(value);
+    //     },
+    //     function(value) {
+    //         console.log(value);
+    //     }
+    // )
+
+    // then의 중첩 - > 분쇄 코드, 기능 나누기.
+    let promise = getNotice(1);
+    promise
+    .then(                              // notice 받아서 title만 반환
+        function(notice) {
+            return notice.title;
+        },
+        function(error) {
+            console.log(error);
+            throw error.message;
+        }
+    )
+    .then(                              // 받은 notice.title 출력
+        function(title) {
+            console.log(title);
+            console.log("정상");
+        },
+        function(message) {
+            console.log("오류");
+            console.log(message);
+        }
+
+    )
+}
+
+// promise 모두 모아 실행 & 예외
+{
+
+    function nextInt(max){
+        return Math.floor(Math.random()*max);
+    }
+
+    function getNotice(id) {
+        console.log('비동기식 promise get 요청');
+        
+        // 시간이 오래 걸리는 가정
+        // resolove - > 성공시, reject - > 실패시 
+        return new Promise((resolve,reject) =>{
+            
+            setTimeout(function() {
+                let notice = {id:1, title:'제목1'};
+                try{
+                    
+                    let value = nextInt(10);
+                    if(value > 5)
+                        throw new Error("big num");
+                }
+                catch(msg){
+                    reject({status : "실패", message : "너무 큰 수"});
+                }
+
+                resolve();
+            
+                    
+            },5000);
+            console.log("???");
+        })
+    }
+
+    let promise1 = getNotice(1);
+    // promise1
+    // .then(function() {
+    //     console.log("promise1 성공");
+    // })
+
+    let promise2 = getNotice(1);
+    // promise2
+    // .then(function() {
+    //     console.log("promise2 성공");
+    // })
+
+    let promiseAll = Promise.all([promise1,promise2]);
+    promiseAll
+    .then(()=>
+        console.log("promise all 성공")
+    );
+    //              ||
+    // Promise.all([
+    //     getNotice(1),
+    //     getNotice(1)
+    // ])
+    // .then(function() {
+    //     console.log("promise all 성공");
+    // })
 }
