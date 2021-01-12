@@ -10,13 +10,25 @@ window.addEventListener("load",(e)=>{
     let containerOffset = {x:container.offsetLeft, y:container.offsetTop};
     console.log(containerOffset);
 
+    // Scroll의 위치 값
+    function getScrollPosition() {
+        // window.pageXOffset,window.pageYOffset = > IE
+        // document.documentElement.scrollLeft, document.documentElement.scrollTop = > 다른 브라우저
+        let x = window.pageXOffset || document.documentElement.scrollLeft;
+        let y = window.pageYOffset || document.documentElement.scrollTop;
+        return {x,y};
+    } 
     // 1. position : relative를 이용하여 컨테이너 위치를 기준으로 보정하고 컨테이너 상대 좌표이용
     // 2. clientX를 이용하여 문서 위치를 기준으로 보정하는 방식.
     container.onmousemove = (e)=>{
         if(!down) return;
 
-        box.style.left = e.x - containerOffset.x - offset.x+"px";
-        box.style.top = e.y - containerOffset.y - offset.y +"px";
+        let {x:scrollX,y:scrollY} = getScrollPosition();
+        box.style.left = e.x - containerOffset.x - offset.x+scrollX+"px";
+        box.style.top = e.y - containerOffset.y - offset.y +scrollY+"px";
+
+        // box.style.left = e.x - containerOffset.x - offset.x+"px";
+        // box.style.top = e.y - containerOffset.y - offset.y +"px";
 
         
         // box.style.left = e.x - offset.x +"px";
