@@ -3,8 +3,7 @@ import ModalBox from "../modules/ModalBox.js";
 //import UploadBox from "../modules/UploadBox.js";
 import CSS from "../modules/CSS.js";
 
-
-// ================ DragBox ===========
+//  =========== DragBox
 window.addEventListener("load",(e)=>{
     
     // 1. 객체를 넘겨주거나
@@ -17,60 +16,47 @@ window.addEventListener("load",(e)=>{
 });
 
 
-// ================ ModalBox ===========
-window.addEventListener("load", (e) => {
+// ========== ModalBox
+window.addEventListener("load",(e)=>{
+    
+   let section = document.querySelector("#s2");
+   let alertButton = section.querySelector(".alert-button");
 
-    let section = document.querySelector("#s2");
-    let alertButton = section.querySelector(".alert-button");
+   //2-1
+   // let modalBox = new ModalBox();
 
-    //2-1
-    // let modalBox = new ModalBox();
+   alertButton.onclick = (e)=>{
 
-    alertButton.onclick = (e) => {
+   //  let modalBox = new ModalBox();
+   //  let time = 0;
+   //  setTimeout(() => {
+   //      modalBox.alert("he");
+   //      console.log(time);
+   //  }, 100);
+    // modalBox.alert("he");
+    //    2
+    //    let modalBox = new ModalBox();
+    //    alert("hello");
+    //    modalBox.alert("he");
+    
+    // =========== 3 ===========
+    // ModalBox.alert("he");
 
-        //  let modalBox = new ModalBox();
-        //  let time = 0;
-        //  setTimeout(() => {
-        //      modalBox.alert("he");
-        //      console.log(time);
-        //  }, 100);
-        // modalBox.alert("he");
-        //    2
-        //    let modalBox = new ModalBox();
-        //    alert("hello");
-        //    modalBox.alert("he");
-
-        // =========== 3 ===========
-
-        // ModalBox.alert("hello");
-
-        // let p = ModalBox.alert("hello");
-        // p
-        //     .then((result) => {
-        //         console.log(result + "가(이) 눌렸구나!");
-        //     });
-
-        // 동기적으로 처리
-        (async () => {
-            let result = await ModalBox.alert("오류가 났습니다");
-            console.log(result + "가(이) 눌렸구나!!");
-            
-        })();
-        
-
-        // 비동기적으로 처리
-
-        let promise = ModalBox.alert("hello");
-        promise
-        .then
-        (
-            result=>{
-                console.log(result + "가(이) 눌렸구나!!");
-            }
-        )
-
-    }
-
+    // 비동기 처리
+    let promise = ModalBox.alert("he");
+    promise
+    .then
+    (result=>{
+        console.log(`${result}가 눌렸구나`);
+    });
+       
+    // 동기 처리
+    (async ()=>{
+        let result = await ModalBox.alert("유효하지 않아요");
+        console.log(`${result}가 눌렸구나`);
+    })();
+   }
+    
 });
 
 //  =========== UploadBox
@@ -90,7 +76,7 @@ window.addEventListener("load",(e)=>{
 
         if(!valid)
             ModalBox.alert("파일 형식이 아닙니다");
-        //cossole.log(e.dataTransfer.files[0].name);
+        cossole.log(e.dataTransfer.files[0].name);
         console.log("drop:" + e.dataTransfer);
 
         // JS의 데이터를 보내는 방식 FormData - > HTML에서의 form encoding="multiPart"
