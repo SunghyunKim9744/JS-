@@ -176,7 +176,7 @@ window.addEventListener("load", function () {
         //     }
 
         // }
-        // open 3번째 인자 true - > 동기형, false - > 비동기형(기본값)
+        // open 3번째 인자 true - > 동기형(기본값), false - > 비동기형
         // 요청은 우선 동기적으로 해야함.
         // request.open("GET", "/api/board/notice/list?p="+page, true);
         // request.send();
