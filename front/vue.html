@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        window.addEventListener("load",(e)=>{
+
+            let data = {message : "Hellow~~",title:"제목이다"}; // Model
+
+
+            // 1 Way : Model - > View;
+            // 2 Way : Model - > View // - > Model
+
+            // 기본 방식
+            // 1. 엘리먼트 노드 선택(#app)
+            // 2. innerText 속성 이용
+            // const app = document.querySelector("#app");
+            // app.innerText = data.message;
+
+            // Vue 프레임워크 방식
+            // 1. Vue 객체 안에다가 엘리먼트와 모델 선택
+            let app= new Vue({
+                el:'#app',
+                data
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="app">
+         <!-- Vue 프레임워크에서의 출력표기법 -->
+        {{message}}<br/>
+        {{title}}<br/>
+
+        <!-- 2Way -->
+        <!-- Model이 바뀌면 View도 같이 바뀜. -->
+        <input type="text" v-model="title">
+    </div>
+</body>
+</html>
