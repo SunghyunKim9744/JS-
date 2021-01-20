@@ -103,5 +103,53 @@ function tic() {
 
 
 
-//setInterval(tic, 1000);
+// //setInterval(tic, 1000);
 tic();
+
+
+class Calc extends React.Component{
+	constructor(){
+		super();
+	
+		
+		this.state = {
+			x:0,
+			y:0,
+			result:0
+		};
+	}
+
+	resultButtonClick(e){
+		// this.setState({result : parseInt(this.state.x)+parseInt(this.state.y)});
+
+		// let x = parseInt(this.state.x);
+		// let y = parseInt(this.state.y);
+		let {x,y} = this.state;
+		x = parseInt(this.state.x);
+		y = parseInt(this.state.y);
+		let result = x+y;
+		this.setState({result});
+	}
+
+	// xInputChange(e){
+	// 	this.setState({x:e.target.value});
+	// }
+
+	render(){
+		console.log("렌더링");
+		return <section>
+			<h1>계산기</h1>
+				<div>
+					<input type="text" dir="rtl" value={this.state.x} onChange={(e)=>{this.setState({x:e.target.value});}}/>
+					<input type="text" dir="rtl" value={this.state.y} onChange={(e)=>{this.setState({y:e.target.value});}}/>
+					<input type="button" value="계산" onClick={this.resultButtonClick.bind(this)}/>
+					<input type="text" dir="rtl" value={this.state.result}/>
+			   </div>
+			   </section>
+	}
+}
+ReactDOM.render(
+			<Calc/>,
+			document.querySelector("#app"));
+
+
