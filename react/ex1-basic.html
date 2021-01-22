@@ -36,6 +36,26 @@
             // ES6 <-> Babel의 차이
             // HTML <-> JSX의 차이(XML구문 규칙 사용) ex - > 단일태그  ex -> <br> X , <br/> O
         });
+
+   
+
+// 리엑트란? -> Flux를 구현한 프레임워크다.
+      // Flux는 뭐냐> MVC가 SNS관련 서비스를 구현하기에는 부적합하다 생각되어서 
+      // - Store(Buffering이 가능한 Model) 개념의 단방향 렌더링(rendering)을 지원하는 방법론이다.
+      // 따라서 우리는 최대한 단방향 MVC 방식으로 코딩을 해결하면서 React가 가지는 장점도 최대한 활용할 수 있어야 한다.
+      
+      // rendering을 위한 프레임워크이므로 -> 빠르게 렌더링하기 위해 JSX(Virtual DOM)을 사용
+      // rendering을 유발하는 주체 -> state
+      // 컴포넌트 -> 기존 페이지에서 rendering 단위 블럭을 잘라낸 블록
+      //    : Component 종류 function / class
+      //    : class 콤포넌트를 사용하는 경우? state를 활용할 때
+      //      단 최근에는 Hook를 이용해서 function 콤포넌트에서도 제한적으로 state를 활용할 수 있다.
+      // Commponent 중첩 -> 내부 컴포넌트에게 값을 전달하게 될 때  Props를 통해서 공유할 수 있다.
+      
+      // 2WAY 방식을 처리하기 위해 input 박스에 state를 바인딩하고 onChange를 통해서 state를 변경하는데
+      //   가능하면  value/onChange를 모두 지우고 대안을 생각해보는 것이 필요.
+      // * fetch api 
+      // 코드 블록 { } : JSP의 <% %>,"<%=page==1?'hello':'ok' %>->out.print("")",<%! %>,<%@ %>
     </script>
 </head>
 <body>
